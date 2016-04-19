@@ -1,0 +1,92 @@
+{%
+Dim inputName = CurrentQuestion.InputName()
+Dim inputValue
+Dim inputId
+Dim caption
+Dim image
+Dim attrChecked
+Dim scaleMin = CurrentADC.PropValue("scaleMin")
+Dim scaleMax = CurrentADC.PropValue("scaleMax")
+Dim numberOfCircles = scaleMax.ToNumber() - scaleMin.ToNumber() + 1
+
+Dim THP = CurrentADC.PropValue("targetHorizontalPosition")
+Dim TVP = CurrentADC.PropValue("targetVerticalPosition")
+
+Dim ar = CurrentQuestion.ParentLoop.AvailableResponses
+Dim i
+Dim j
+For j = 1 To ar.Count 
+    inputName = CurrentQuestion.Iteration(ar[j].Index).InputName()
+    inputId   = inputName
+    inputValue = CurrentQuestion.Iteration(ar[j].Index).InputValue()
+%}
+<input type="text" id="{%= inputId %}" name="{%= inputName %}" value="{%= inputValue %}"  />
+{% Next %}
+
+{% IF TVP = "top" or THP = "left" Then %}
+	<div class="targetContainer">
+        {% For j = 1 To numberOfCircles %}
+            <div class="circle circle{%=j-1%}">   
+        {% Next %}
+        {% For i = 1 To numberOfCircles %}
+            </div>
+        {% Next %}
+    </div>
+	<div class="startArea">
+        {%
+        For j = 1 To ar.Count 
+            inputName  = CurrentQuestion.Iteration(ar[j].Index).InputName()
+            inputId    = inputName
+            inputValue = CurrentQuestion.Iteration(ar[j].Index).InputValue()
+            caption    = ar[j].Caption
+            image	   = ar.ResourceURL[j]
+        %}
+        <div id="res{%=j-1%}" class="responseItem" data-index="{%=j-1%}">
+            {% IF CurrentADC.PropValue("responseTextPosition") = "top" or CurrentADC.PropValue("responseTextPosition") = "left" Then %}
+                <div class="response_text">{%:= caption %}</div>
+            {% EndIF %}
+            {% IF image <> "" Then %}
+                <img src="{%= image %}" />
+            {% EndIF %}
+            {% IF CurrentADC.PropValue("responseTextPosition") = "bottom" or CurrentADC.PropValue("responseTextPosition") = "right" Then %}
+                <div class="response_text">{%:= caption %}</div>
+            {% EndIF %}
+            <div style="clear:both"></div>
+        </div>
+        {% Next %}
+        <div style="clear:both"></div>
+	</div>
+{% ELSE %}
+	<div class="startArea">
+        {%
+        For j = 1 To ar.Count 
+            inputName  = CurrentQuestion.Iteration(ar[j].Index).InputName()
+            inputId    = inputName
+            inputValue = CurrentQuestion.Iteration(ar[j].Index).InputValue()
+            caption    = ar[j].Caption
+            image	   = ar.ResourceURL[j]
+        %}
+        <div id="res{%=j-1%}" class="responseItem" data-index="{%=j-1%}">
+            {% IF CurrentADC.PropValue("responseTextPosition") = "top" or CurrentADC.PropValue("responseTextPosition") = "left" Then %}
+                <div class="response_text">{%:= caption %}</div>
+            {% EndIF %}
+            {% IF image <> "" Then %}
+                <img src="{%= image %}" />
+            {% EndIF %}
+            {% IF CurrentADC.PropValue("responseTextPosition") = "bottom" or CurrentADC.PropValue("responseTextPosition") = "right" Then %}
+                <div class="response_text">{%:= caption %}</div>
+            {% EndIF %}
+            <div style="clear:both"></div>
+        </div>
+        {% Next %}
+        <div style="clear:both"></div>
+	</div>
+	<div class="targetContainer">
+        {% For j = 1 To numberOfCircles %}
+            <div class="circle circle{%=j-1%}">  
+        {% Next %}
+        {% For i = 1 To numberOfCircles %}
+            </div>
+        {% Next %}
+    </div>
+{% EndIF %}
