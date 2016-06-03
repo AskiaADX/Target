@@ -20,7 +20,7 @@ For j = 1 To ar.Count
     inputId   = inputName
     inputValue = CurrentQuestion.Iteration(ar[j].Index).InputValue()
 %}
-<input type="text" id="{%= inputId %}" name="{%= inputName %}" value="{%= inputValue %}"  />
+<input type="hidden" id="{%= inputId %}" name="{%= inputName %}" value="{%= inputValue %}"  />
 {% Next %}
 
 {% IF TVP = "top" or THP = "left" Then %}

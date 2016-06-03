@@ -20,7 +20,7 @@
     <style width="400" height="300" />
     <constraints>
       <constraint on="questions" single="false" multiple="false" numeric="true" date="false" open="false" chapter="false" requireParentLoop="true" />
-      <constraint on="controls" responseblock="true" checkbox="false" label="false" listbox="false" radiobutton="false" textbox="false" />
+      <constraint on="controls" responseblock="true" label="false" listbox="false" radiobutton="false" textbox="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
   </info>
@@ -31,6 +31,7 @@
       <content fileName="standard.css" type="css" mode="dynamic" position="head" />
       <content fileName="default.html" type="html" mode="dynamic" position="head" />
       <content fileName="numeric.html" type="html" mode="dynamic" position="none" />
+      <content fileName="meta.html" type="html" mode="dynamic" position="head" />
       <content fileName="jquery-1.12.2.min.js" type="javascript" mode="share" position="head" />
       <content fileName="jquery-ui.min.js" type="javascript" mode="share" position="head" />
       <content fileName="jquery.ui.touch-punch.min.js" type="javascript" mode="share" position="head" />
@@ -471,11 +472,9 @@
       </property>
     </category>
     <category id="target" name="Target area">
-      <property xsi:type="standardProperty" id="targetAreaWidth" name="Target Area Width" type="string" mode="static">
-        <description><![CDATA[
-          When set this will force the width of the reponses
-        ]]></description>
-        <value><![CDATA[auto]]></value>
+      <property xsi:type="standardProperty" id="targetAreaWidth" name="Target Area Width" type="string" mode="static" require="false" visible="true">
+        <description><![CDATA[When set this will force the width of the reponses]]></description>
+        <value><![CDATA[50%]]></value>
       </property>
       <property xsi:type="standardProperty" id="useAltCircle" name="Use alt circle colour" type="boolean" mode="static">
         <description><![CDATA[
@@ -529,7 +528,7 @@
           The bottom end of the scale
        ]]></description>
         <value><![CDATA[1]]></value>
-      </property> 
+      </property>
       <property xsi:type="standardProperty" id="scaleMax" name="Scale Maximum" type="number" mode="static">
         <description><![CDATA[
           The top end of the scale
@@ -541,34 +540,32 @@
           The width of the center circle
        ]]></description>
         <value><![CDATA[1]]></value>
-      </property> 
+      </property>
       <property xsi:type="standardProperty" id="outerCircleWidth" name="Outer Circle Width" type="number" mode="static">
         <description><![CDATA[
           The width of the outside circle
        ]]></description>
         <value><![CDATA[5]]></value>
-      </property> 
+      </property>
     </category>
     <category id="startArea" name="Start area">
-      <property xsi:type="standardProperty" id="startAreaWidth" name="Start Area Width" type="string" mode="static">
-        <description><![CDATA[
-          When set this will force the width of the reponses
-        ]]></description>
-        <value><![CDATA[auto]]></value>
+      <property xsi:type="standardProperty" id="startAreaWidth" name="Start Area Width" type="string" mode="static" require="false" visible="true">
+        <description><![CDATA[When set this will force the width of the reponses]]></description>
+        <value><![CDATA[50%]]></value>
       </property>
-        <property xsi:type="standardProperty" id="startAreaColourPrimary" name="Start Area Colour Primary" type="color" mode="static">
+      <property xsi:type="standardProperty" id="startAreaColourPrimary" name="Start Area Colour Primary" type="color" mode="static">
         <description><![CDATA[
           Primary colour of the selected item
         ]]></description>
         <value><![CDATA[0,147,234]]></value>
       </property>
-        <property xsi:type="standardProperty" id="startAreaColourSecondary" name="Start Area Colour Primary" type="color" mode="static">
+      <property xsi:type="standardProperty" id="startAreaColourSecondary" name="Start Area Colour Primary" type="color" mode="static">
         <description><![CDATA[
           Primary colour of the selected item
         ]]></description>
         <value><![CDATA[0,147,234]]></value>
       </property>
-        <property xsi:type="standardProperty" id="startAreaBorderColour" name="Start Area Colour Primary" type="color" mode="static">
+      <property xsi:type="standardProperty" id="startAreaBorderColour" name="Start Area Colour Primary" type="color" mode="static">
         <description><![CDATA[
           Primary colour of the selected item
         ]]></description>
@@ -629,10 +626,8 @@
       </property>
     </category>
     <category id="layout" name="Layout">
-      <property xsi:type="standardProperty" id="targetHorizontalPosition" name="Target horizontal position" type="string" mode="static">
-        <description><![CDATA[
-          The amount of curve on the response corners
-        ]]></description>
+      <property xsi:type="standardProperty" id="targetHorizontalPosition" name="Target horizontal position" type="string" mode="static" require="false" visible="true">
+        <description><![CDATA[The amount of curve on the response corners]]></description>
         <value><![CDATA[right]]></value>
         <options>
           <option value="left" text="left" />
