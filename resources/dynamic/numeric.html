@@ -5,9 +5,14 @@ Dim inputId
 Dim caption
 Dim image
 Dim attrChecked
-Dim scaleMin = CurrentADC.PropValue("scaleMin")
-Dim scaleMax = CurrentADC.PropValue("scaleMax")
-Dim numberOfCircles = scaleMax.ToNumber() - scaleMin.ToNumber() + 1
+Dim scaleMin = CurrentQuestion.MinValue
+Dim scaleMax = CurrentQuestion.MaxValue
+Dim innerCircleText = CurrentADC.PropValue("innerCircleText")
+Dim innerCircleImage = CurrentADC.PropValue("innerCircleImage")
+Dim innerCircleImageWidth = CurrentADC.PropValue("innerCircleImageWidth")
+Dim innerCircleImageHeight = CurrentADC.PropValue("innerCircleImageHeight")
+
+Dim numberOfCircles = scaleMax - scaleMin + 1
 
 Dim THP = CurrentADC.PropValue("targetHorizontalPosition")
 Dim TVP = CurrentADC.PropValue("targetVerticalPosition")
@@ -26,8 +31,14 @@ For j = 1 To ar.Count
 {% IF TVP = "top" or THP = "left" Then %}
 	<div class="targetContainer">
         {% For j = 1 To numberOfCircles %}
-            <div class="circle circle{%=j-1%}">   
-        {% Next %}
+            <div class="circle circle{%=j-1%}"> 
+        {% Next %}  
+            {% IF innerCircleImage <> "" Then %}
+                <img class="circleImg" width="{%:= innerCircleImageWidth %}" height="{%:= innerCircleImageHeight %}" src="{%:= innerCircleImage %}" />
+            {% EndIF %}
+            {% IF innerCircleText <> "" Then %}
+				<div class="circleText">{%:= innerCircleText %}</div>
+            {% EndIF %}
         {% For i = 1 To numberOfCircles %}
             </div>
         {% Next %}
@@ -55,6 +66,7 @@ For j = 1 To ar.Count
         </div>
         {% Next %}
         <div style="clear:both"></div>
+        <div class="targetLayer"></div>
 	</div>
 {% ELSE %}
 	<div class="startArea">
@@ -80,11 +92,18 @@ For j = 1 To ar.Count
         </div>
         {% Next %}
         <div style="clear:both"></div>
+        <div class="targetLayer"></div>
 	</div>
 	<div class="targetContainer">
         {% For j = 1 To numberOfCircles %}
-            <div class="circle circle{%=j-1%}">  
-        {% Next %}
+            <div class="circle circle{%=j-1%}"> 
+        {% Next %}  
+            {% IF innerCircleImage <> "" Then %}
+                <img class="circleImg" width="{%:= innerCircleImageWidth %}" height="{%:= innerCircleImageHeight %}" src="{%:= innerCircleImage %}" />
+            {% EndIF %}
+            {% IF innerCircleText <> "" Then %}
+				<div class="circleText">{%:= innerCircleText %}</div>
+            {% EndIF %}
         {% For i = 1 To numberOfCircles %}
             </div>
         {% Next %}

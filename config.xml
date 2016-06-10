@@ -473,7 +473,7 @@
     </category>
     <category id="target" name="Target area">
       <property xsi:type="standardProperty" id="targetAreaWidth" name="Target Area Width" type="string" mode="static" require="false" visible="true">
-        <description><![CDATA[When set this will force the width of the reponses]]></description>
+        <description><![CDATA[This sets the width of the target area]]></description>
         <value><![CDATA[50%]]></value>
       </property>
       <property xsi:type="standardProperty" id="useAltCircle" name="Use alt circle colour" type="boolean" mode="static">
@@ -512,7 +512,7 @@
         ]]></description>
         <value><![CDATA[161,167,173]]></value>
       </property>
-      <property xsi:type="standardProperty" id="circleBorderThickness" name="Circle border thickness" type="string" mode="static">
+      <property xsi:type="standardProperty" id="circleBorderWidth" name="Circle border thickness" type="string" mode="static">
         <description><![CDATA[
           Force height or width for all images
         ]]></description>
@@ -537,15 +537,37 @@
       </property>
       <property xsi:type="standardProperty" id="innerCircleWidth" name="Inner Circle Width" type="number" mode="static">
         <description><![CDATA[
-          The width of the center circle
+          The width of the center circle CHECK OR SET
        ]]></description>
-        <value><![CDATA[1]]></value>
+        <value><![CDATA[150]]></value>
       </property>
-      <property xsi:type="standardProperty" id="outerCircleWidth" name="Outer Circle Width" type="number" mode="static">
+      <property xsi:type="standardProperty" id="innerCircleColour" name="Inner Circle Colour" type="color" mode="static">
         <description><![CDATA[
-          The width of the outside circle
-       ]]></description>
-        <value><![CDATA[5]]></value>
+          Border colour for selected responses
+        ]]></description>
+        <value><![CDATA[0,147,234]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="innerCircleText" name="Inner Circle Text" type="string" mode="static" require="false" visible="true">
+        <description><![CDATA[This sets the width of the target area]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="innerCircleTextColour" name="Inner Circle Text Colour" type="color" mode="static">
+        <description><![CDATA[
+          Inner circle text colour
+        ]]></description>
+        <value><![CDATA[0,0,0]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="innerCircleImage" name="Inner Circle Image" type="string" mode="static" require="false" visible="true">
+        <description><![CDATA[This sets the width of the target area]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="innerCircleImageWidth" name="Inner Circle Image Width" type="string" mode="static" require="false" visible="true">
+        <description><![CDATA[This sets the width of the target area]]></description>
+        <value></value>
+      </property>
+      <property xsi:type="standardProperty" id="innerCircleImageHeight" name="Inner Circle Image Height" type="string" mode="static" require="false" visible="true">
+        <description><![CDATA[This sets the width of the target area]]></description>
+        <value></value>
       </property>
     </category>
     <category id="startArea" name="Start area">

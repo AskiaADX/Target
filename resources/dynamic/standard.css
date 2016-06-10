@@ -55,14 +55,16 @@ Dim stackResponses =CurrentADC.PropValue("stackResponses")
 
 Dim targetAreaWidth =CurrentADC.PropValue("targetAreaWidth")
 
-Dim outerCircleWidth =CurrentADC.PropValue("outerCircleWidth")
-
 Dim circleColour =CurrentADC.PropValue("circleColour")
 Dim circleBorderColour =CurrentADC.PropValue("circleBorderColour")
 Dim altCircleColour =CurrentADC.PropValue("altCircleColour")
 Dim altCircleBorderColour =CurrentADC.PropValue("altCircleBorderColour")
-Dim circleBorderThickness =CurrentADC.PropValue("circleBorderThickness")
+Dim circleBorderWidth =CurrentADC.PropValue("circleBorderWidth")
 Dim circleHoverColour =CurrentADC.PropValue("circleHoverColour")
+
+Dim innerCircleImage =CurrentADC.PropValue("innerCircleImage")
+Dim innerCircleColour =CurrentADC.PropValue("innerCircleColour")
+Dim innerCircleTextColour =CurrentADC.PropValue("innerCircleTextColour")
 
 Dim controlAlign =CurrentADC.PropValue("controlAlign")
 
@@ -240,7 +242,6 @@ EndIF
 
 #adc_{%= CurrentADC.InstanceId%} .targetContainer { 
     display:block; 
-    height:{%= outerCircleWidth %}; 
     width:{%= targetAreaWidth %}; 
     background:#09F; 
     position:absolute; 
@@ -250,10 +251,31 @@ EndIF
 #adc_{%= CurrentADC.InstanceId%} .circle { 
     display:block; 
     background:rgb({%= circleColour%}); 
-    border:{%= circleBorderThickness %} solid rgb({%= circleBorderColour%}); 
+    border:{%= circleBorderWidth %} solid rgb({%= circleBorderColour%}); 
     position:absolute; 
     behavior:url(PIE.htc); 
+    box-sizing:border-box;
 }
+
+#adc_{%= CurrentADC.InstanceId%} .innerCircle { 
+    display:block; 
+    background:rgb({%= innerCircleColour%}); 
+    border:{%= circleBorderWidth %} solid rgb({%= circleBorderColour%}); 
+    position:absolute; 
+    behavior:url(PIE.htc);
+	background-size:100% 100%;
+}
+#adc_{%= CurrentADC.InstanceId%} .innerCircle .circleText { 
+	pointer-events:none;
+    text-align:center;
+    box-sizing:border-box;
+    font-size:{%= fontSize%};
+    color:rgb({%= innerCircleTextColour%}); 
+}
+#adc_{%= CurrentADC.InstanceId%} .innerCircle .circleImg { 
+	pointer-events:none;
+}
+
 
 #adc_{%= CurrentADC.InstanceId%} .over, #adc_{%= CurrentADC.InstanceId%} .alt.over {
     background: rgb({%= circleHoverColour%}); 
@@ -262,5 +284,5 @@ EndIF
 
 #adc_{%= CurrentADC.InstanceId%} .alt {
     background:rgb({%= altCircleColour%}); 
-    border:{%= circleBorderThickness %} solid rgb({%= altCircleBorderColour%}); 
+    border:{%= circleBorderWidth %} solid rgb({%= altCircleBorderColour%}); 
 }

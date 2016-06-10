@@ -44,8 +44,9 @@
         (options.numberOfCircles = options.numberOfCircles || 5);
         (options.scaleMin = options.scaleMin || 0);
         (options.scaleMax = options.scaleMax || 5);
-        (options.innerCircleWidth = options.innerCircleWidth || 100);
-        (options.outerCircleWidth = options.outerCircleWidth || 400);
+        (options.innerCircleWidth = options.innerCircleWidth || 150);
+        (options.innerCircleImageWidth = options.innerCircleImageWidth || '100%');
+        (options.innerCircleImageHeight = options.innerCircleImageHeight || '100%');
 		(options.scaleOnTarget = options.scaleOnTarget || 0.5);
         (options.targetHorizontalPosition = options.targetHorizontalPosition || "right");
         (options.useAltCircle = options.useAltCircle || false);
@@ -88,6 +89,7 @@
 		var $container = $(this),
 			currentIteration = 0,
             iterations = options.iterations,
+			animationSpeed = options.animationSpeed,
 			clickActive = null,
 			autoImageSize = Boolean(options.autoImageSize),
 			stackResponses = Boolean(options.stackResponses),
@@ -102,7 +104,10 @@
 			enableMobileFit = false,
             mouseMove = false,
             smartView = false,
-            useAltCircle = Boolean(options.useAltCircle);
+			scaleMin = options.scaleMin,
+			scaleMax = options.scaleMax,
+            useAltCircle = Boolean(options.useAltCircle),
+			circleBorderWidth = parseInt(options.circleBorderWidth) > 0 ? parseInt(options.circleBorderWidth) : 0;
 		
         var isMobile = false; //initiate as false
 		// device detection
@@ -119,15 +124,12 @@
             
         }
         
-        
-        
 		if ( autoStackWidth !== '' ) {
 			if ( $(this).parents('.controlContainer').width() <= parseInt(autoStackWidth) ) {
 				stackResponses = true,
 				enableMobileFit = true;
 			}
 		}
-				
 			
 		$container.find('.responseItem img').hide();
 		
@@ -237,11 +239,12 @@
 		
 		$('.responseItem').each(function(index) { 
             $(this).data({
-				'oTop':$(this).offset().top,
-				'oLeft':$(this).offset().left,
+				'oTop':$(this).position().top,
+				'oLeft':$(this).position().left,
 				'oHeight':$(this).outerHeight(),
 				'oWidth':$(this).outerWidth()
 			});
+			
 			if ( $(this).outerWidth(true) > $('.startArea').width() )
 				$(this).width( $(this).width() - ($(this).outerWidth(true) - $('.startArea').outerWidth()) );
 		});
@@ -287,10 +290,10 @@
         
         // set start area to height of responses
         $container.find('.startArea').height( $container.find('.startArea').height() );
-        $container.find('.targetContainer').height( $container.find('.circle0').height() );
+        $container.find('.targetContainer').height( $container.find('.circle' + scaleMin ).height() );
 	
 		//if ( !stackResponses ) {
-		for ( var i=($('.responseItem').size()-1); i>=0; i-- ) {
+		//for ( var i=($('.responseItem').size()-1); i>=0; i-- ) {
 		
 			/*var offset = $('.responseItem').eq(i).offset();
 			$('.responseItem').eq(i).offset(offset);
@@ -301,20 +304,21 @@
 				'oWidth':$('.responseItem').eq(i).outerWidth()
 			});*/
 				
-		}
-		if ( stackResponses ) {
-			
+		//}
+		if ( smartView || stackResponses ) {
+												
 			for ( var i=($('.responseItem').size()-1); i>=0; i-- ) {
+				$('.responseItem').eq(i).css("position", "absolute");
 				$('.responseItem').eq(i).css({
 					'left' : (($container.find('.startArea').outerWidth()*0.5) - ($('.responseItem').eq(i).outerWidth(true)*0.5)) + 'px',
-					'top' : 0
+					'top' : (($container.find('.startArea').outerHeight()*0.5)) + 'px'
 				});
-				$('.responseItem').eq(i).css("position", "absolute");
+								
 				var offset = $('.responseItem').eq(i).offset();
 				
 				$('.responseItem').eq(i).offset(offset);
                 $('.responseItem').eq(i).data({
-                    'oTop':$('.responseItem').eq(i).offset().top,
+                    'oTop':(($container.find('.startArea').outerHeight()*0.5) - ($('.responseItem').eq(i).outerHeight(true)*0.5)) + 'px',
                     'oLeft':(($container.find('.startArea').outerWidth()*0.5) - ($('.responseItem').eq(i).outerWidth(true)*0.5)) + 'px',
                     'oHeight':$('.responseItem').eq(i).outerHeight(),
                     'oWidth':$('.responseItem').eq(i).outerWidth()
@@ -327,37 +331,40 @@
 			   if ($(this).outerHeight(true) > maxHeight) { maxHeight = $(this).outerHeight(true); }
 			});
 									
-			$('.startArea').height( maxHeight );
+			$('.startArea').height( maxHeight + 40 );
 			
 		}
         
         /* Circles */
-        $container.find('.circle0').width('100%');
+        $container.find('.circle' + scaleMin ).width('100%');
         if ( smartView ) {
             var bodyPadding = $('body').outerWidth(true) - $('body').outerWidth(false);
-            if( ($(window).outerHeight(false) - $container.find('.startArea').outerHeight(true) - bodyPadding) > $container.find('.targetContainer').outerWidth())
-            	$container.find('.circle0').width( $container.find('.targetContainer').outerWidth() );
+            if( ($(window).outerHeight() - $container.find('.startArea').outerHeight(true) - bodyPadding) > $container.find('.targetContainer').outerWidth())
+            	$container.find('.circle' + scaleMin ).width( $container.find('.targetContainer').outerWidth() );
             else
-                $container.find('.circle0').width( $(window).outerHeight(false) - $container.find('.startArea').outerHeight(true) - bodyPadding);
-            $container.find('.circle0').css('left',(($container.find('.targetContainer').outerWidth()/2) - $container.find('.circle0').outerWidth()/2) +'px')
+                $container.find('.circle' + scaleMin ).width( $(window).outerHeight(false) - $container.find('.startArea').outerHeight(true) - bodyPadding);
+            $container.find('.circle' + scaleMin ).css('left',(($container.find('.targetContainer').outerWidth()/2) - $container.find('.circle' + scaleMin ).outerWidth()/2) +'px')
         }
-        var outerCircleWidth = $container.find('.circle0').width();
-        var totalNumberOfCircles = options.scaleMax - options.scaleMin + 1;
-		var circleSizeDiff = (outerCircleWidth - options.innerCircleWidth) / totalNumberOfCircles;
+        var outerCircleWidth = $container.find('.circle' + scaleMin ).width();
+			outerCircleWidth = outerCircleWidth > $container.find('.targetContainer').outerWidth() ? $container.find('.targetContainer').outerWidth() : outerCircleWidth;
+		
+        var totalNumberOfCircles = options.scaleMax - options.scaleMin;
+		
+		var circleSizeDiff = Math.round((outerCircleWidth - options.innerCircleWidth) / totalNumberOfCircles);
 		var currentCircleWidth = outerCircleWidth;
 		var previousCircle = $container.find('.targetContainer');
         var alt = 0;
         		
-		for ( var i=0; i<totalNumberOfCircles; i++ ) {
-			
+		for ( var i=scaleMin; i<=scaleMax; i++ ) {
+						
 			$container.find('.circle' + i)
             	.css({
 					'zoom': 1,
                     'position': 'absolute',
                     'width': currentCircleWidth + 'px',
                     'height': currentCircleWidth + 'px',
-                    'top': i==0?'0px' : (circleSizeDiff/2) /*- options.borderWidth*/ + 'px',
-                    'left':i==0?'0px' : (circleSizeDiff/2) /*- options.borderWidth*/ + 'px',
+                    'top': i==0?'0px' : (circleSizeDiff/2) - circleBorderWidth + 'px',
+                    'left':i==0?'0px' : (circleSizeDiff/2) - circleBorderWidth + 'px',
                     '-webkit-border-radius':(currentCircleWidth/2) + 'px',
                     '-moz-border-radius':	(currentCircleWidth/2) + 'px', 
                     '-khtml-border-radius':	(currentCircleWidth/2) + 'px', 
@@ -365,8 +372,10 @@
                 })
                 .data('index',i);
            	if ( smartView ) {
-                $container.find('.circle0').css('left',(($container.find('.targetContainer').outerWidth()/2) - $container.find('.circle0').outerWidth()/2) +'px')
+                $container.find('.circle' + scaleMin ).css('left',(($container.find('.targetContainer').outerWidth()/2) - $container.find('.circle' + scaleMin ).outerWidth()/2) +'px')
             }
+			
+			console.log(circleBorderWidth);
 
             if ( useAltCircle && alt === 1 ) $container.find('.circle' + i).addClass("alt");
             
@@ -377,9 +386,34 @@
             else alt = 0;
 		
 		}
+				
+        // Add class to center circle
+        $('.circle'+scaleMax).addClass('innerCircle');
+        
+        // Resize center circle pic
+        if ( $('.circleImg').outerWidth() > $('.innerCircle').outerWidth() ) {
+            var ratio = $('.circleImg').outerHeight() / $('.circleImg').outerWidth();
+            $('.circleImg').width( $('.innerCircle').outerWidth() );
+           	$('.circleImg').height( $('.circleImg').outerHeight() * ratio );
+            
+        }
+        
+        $('.circleImg').css({
+            'position':'absolute',
+            'top':(($('.innerCircle').outerHeight() - $('.circleImg').outerHeight())/2) + 'px',
+            'left':(($('.innerCircle').outerWidth() - $('.circleImg').outerWidth())/2) + 'px'
+        });
+        
+        // Centralize text
+		$('.circleText').css({
+            'position':'absolute',
+            'top':(($('.innerCircle').outerHeight() - $('.circleText').outerHeight())/2) + 'px',
+            'width':'100%'//'left':(($('.innerCircle').outerWidth() - $('.circleText').outerWidth())/2) + 'px'
+        });
+
         
         // set target container to biggest circle height
-        $container.find('.targetContainer').height($container.find('.circle0').height());
+        $container.find('.targetContainer').height($container.find('.circle' + scaleMin ).height());
         
         // if start area smaller in height than target then increase height
         if ( $container.find('.startArea').height() < $container.find('.targetContainer').height() && !isMobile && parseInt(document.documentElement.clientWidth) > 400 ) 
@@ -422,10 +456,10 @@
 				}
 				
 				$( ui.draggable ).transition({ scale: options.scaleOnTarget, 'top':y + 'px', 'left':x + 'px' }).draggable({ cursorAt: { 
-						top:($(ui.draggable).data('oHeight')*options.scaleOnTarget)/2, 
-						left:($(ui.draggable).data('oWidth')*options.scaleOnTarget)/2
+						top:($(ui.draggable).data('oHeight')/**options.scaleOnTarget*/)/2, 
+						left:($(ui.draggable).data('oWidth')/**options.scaleOnTarget*/)/2
 					}, zIndex: 2700 }).attr('data-ontarget',true);
-                										
+					                										
 				// FIX var currentQuestion = questions[$( ui.draggable ).data('index')];
 				// FIX 	currentQuestion.setValue( parseInt($(this).data('index'))+options.scaleMin );
                 iterations[$(ui.draggable).data('index')].element.val( parseInt($(this).data('index'))+options.scaleMin );
@@ -436,8 +470,10 @@
 				});	
 				
 				$('html').off("mousemove");
-				$('.responseItem[data-ontarget=false]').hide();
-				$('.responseItem[data-ontarget=false]:hidden:first').show();
+				if ( smartView || stackResponses ) {
+					$('.responseItem[data-ontarget=false]').hide();
+					$('.responseItem[data-ontarget=false]:hidden:first').show();
+				}
 			},
             hoverClass: "over"
 			/*over: function( event, ui ) {
@@ -459,17 +495,28 @@
         $( ".startArea" ).droppable({
 			tolerance: "pointer",
 			drop: function( event, ui ) {
-				$( ui.draggable ).draggable({revert:'invalid', cursorAt: { 
-					top:($(ui.draggable).data('oHeight'))/2, 
-					left:($(ui.draggable).data('oWidth'))/2 
-				}}).animate({ top:0, left:$(ui.draggable).data('oLeft') }).transition({ scale: 1 }).attr('data-ontarget',false);
+				if ( smartView || stackResponses ) {
+					$( ui.draggable ).draggable({revert:'invalid', cursorAt: { 
+						top:($(ui.draggable).data('oHeight'))/2, 
+						left:($(ui.draggable).data('oWidth'))/2 
+					}}).animate({ top:$(ui.draggable).data('oTop'), left:$(ui.draggable).data('oLeft') }).transition({ scale: 1 }).attr('data-ontarget',false);
+				} else {
+					
+					
+					$( ui.draggable ).draggable({revert:'invalid', cursorAt: { 
+						top:($(ui.draggable).data('oHeight'))/2, 
+						left:($(ui.draggable).data('oWidth'))/2 
+					}}).animate({ top:0, left:0 }).transition({ scale: 1 }).attr('data-ontarget',false);
+				}
 				
 				// FIX var currentQuestion = questions[$( ui.draggable ).data('index')];
 				// FIX	currentQuestion.clearValues();
                 iterations[$(ui.draggable).data('index')].element.val('');
 				
-				$('.responseItem[data-ontarget=false]').hide();
-				$('.responseItem[data-ontarget=false]:hidden:first').show();
+				if ( smartView || stackResponses ) {
+					$('.responseItem[data-ontarget=false]').hide();
+					$('.responseItem[data-ontarget=false]:hidden:first').show();
+				}
 			},
             hoverClass: "over"
 		});
@@ -477,6 +524,22 @@
         // Activate items
 		
 		$('.responseItem').each(function(question, index) { 
+		
+			if ( smartView || stackResponses ) {
+												
+				$(this).css({
+					'top' : (($container.find('.startArea').outerHeight()*0.5) - ($(this).outerHeight(true)*0.5)) + 'px'
+				});
+				
+				
+				var offset = $(this).offset();
+				
+				$(this).offset(offset);
+				$(this).data({
+					'oTop':(($container.find('.startArea').outerHeight()*0.5) - ($(this).outerHeight(true)*0.5)) + 'px'
+				});
+				
+			}
 			
 			// if value is set then move item;
 			// FIX var currentQuestion = questions[$(this).data('index')];
@@ -489,32 +552,43 @@
 				'onTarget':false
 			});
 			if ( val != '' ) {
-                
+				                
 				//top left
-				var x = ($('.circle'+val).offset().left - $('#res'+$(this).data('index')).data('oLeft')) - $('#res'+$(this).data('index')).outerWidth()/2;
-				var y = ($('.circle'+val).offset().top - $('#res'+$(this).data('index')).data('oTop')) - $('#res'+$(this).data('index')).outerHeight()/2 + $('.circle'+val).outerHeight()/2;
+				/* old
+				var x = ($('.circle'+val).offset().left - parseInt( $(this).data('oLeft') ) ) - $(this).outerWidth()/2;
+				var y = ($('.circle'+val).offset().top - parseInt(  $('#res'+$(this).data('index')).data('oTop') ) ) - $('#res'+$(this).data('index')).outerHeight()/2 + $('.circle'+val).outerHeight()/2;
+				*/
+				var x = (($('.circle'+val).offset().left - $('.startArea').offset().left ) - ($(this).outerWidth()/2)) + (circleSizeDiff/4);
+				var y = (($('.circle'+val).offset().top - $('.startArea').offset().top ) - ($(this).outerHeight()/2) + ($('.circle'+val).outerHeight()/2));
 				
+
                 // Place in random angle
-                var r = $('.circle'+val).width()/2,
+                var r = ($('.circle'+val).width()/2) - (circleSizeDiff/4) ,
                     a = x + r,
                     b = y,
                     t = (Math.PI*2) * (randomNR(0,100)/100);
                 x = a + r * Math.cos(t);
-                y = b + r * Math.sin(t);    
+                y = b + r * Math.sin(t); 
+				
+				//y = 0;
+				 
     			//x = a + (r cos t)
     			//y = b + (r sin t)
-                
+				                
 				$('#res'+$(this).data('index')).draggable({ 
 					revert : 'invalid', 
 					cursorAt: { 
-						top:$(this).outerHeight()/2, 
-						left:$(this).outerWidth()/2 
+						top:($('#res'+$(this).data('index')).data('oHeight')/**options.scaleOnTarget*/)/2, 
+						left:($('#res'+$(this).data('index')).data('oWidth')/**options.scaleOnTarget*/)/2
 					}})
 					.animate({top:y, left:x}, 
 						function(){ 
 							$(this).draggable({ 
 								revert : 'invalid', 
-								cursorAt: false, 
+								cursorAt: { 
+									top:($('#res'+$(this).data('index')).data('oHeight')/**options.scaleOnTarget*/)/2, 
+									left:($('#res'+$(this).data('index')).data('oWidth')/**options.scaleOnTarget*/)/2
+								},
 								zIndex: 2700
 							})
 						}
@@ -535,19 +609,19 @@
 					},
 					drag: function( event, ui ) {
 						
-						var x = ($('.circle0').offset().left - $( this ).data('oLeft')) + $('.circle0').outerWidth(true)/2;
-						var y = ($('.circle0').offset().top - $( this ).offset().top) - 
-								$( event.target ).outerHeight()/2 + $('.circle0').outerHeight()/2;
+						var x = ($('.circle' + scaleMin ).offset().left - $( this ).data('oLeft')) + $('.circle' + scaleMin ).outerWidth(true)/2;
+						var y = ($('.circle' + scaleMin ).offset().top - $( this ).offset().top) - 
+								$( event.target ).outerHeight()/2 + $('.circle' + scaleMin ).outerHeight()/2;
 						
-						var targetX = $('.circle0').offset().left + $('.circle0').outerWidth(true)/2;
-						var targetY = $('.circle0').offset().top + $('.circle0').outerHeight()/2;
+						var targetX = $('.circle' + scaleMin ).offset().left + $('.circle' + scaleMin ).outerWidth(true)/2;
+						var targetY = $('.circle' + scaleMin ).offset().top + $('.circle' + scaleMin ).outerHeight()/2;
 						
 						var annoyingDiffX = ($(this).outerWidth() - $(this).width())/2;
 						var annoyingDiffY = ($(this).outerWidth() - $(this).width())/2;
 						
-						var distanceX = ($('.circle0').offset().left + $('.circle0').outerWidth()/2) - 
+						var distanceX = ($('.circle' + scaleMin ).offset().left + $('.circle' + scaleMin ).outerWidth()/2) - 
 										($(this).offset().left + annoyingDiffX + $(this).outerWidth()/2);
-						var distanceY = ($('.circle0').offset().top + $('.circle0').outerHeight()/2) - 
+						var distanceY = ($('.circle' + scaleMin ).offset().top + $('.circle' + scaleMin ).outerHeight()/2) - 
 										($(this).offset().top + annoyingDiffY + $(this).outerHeight()/2);
 						
 					}
@@ -557,7 +631,10 @@
 				.attr('data-ontarget',false);
 			}
 			
-			$('#res'+$(this).data('index')).hide();
+			if ( smartView || stackResponses ) {
+				$('#res'+$(this).data('index')).hide();
+				$('.responseItem[data-ontarget=true]').show();
+			}
 			
 		});
 			
@@ -578,23 +655,57 @@
                 $('.circle').bind('click', function (e) {
                     if ( $(e.target).data('index') == $(this).data('index') ) setTarget(e);	
                 });
+				$('.targetLayer').css({'display':'block','width':$container.find('.startArea').outerWidth(),'height':$container.find('.startArea').outerHeight(),'position':'absolute','top':'0','left':'0','background':'rgba(000,000,000,0)','z-index':'10000'});
+				$('.startArea').bind('click', function (e) {
+                    if ( $(e.target).data('index') == $(this).data('index') ) setTarget('start');	
+                });
             }
 
         }
 	
         function setTarget(e) {
-
-            $(clickActive).animate({
-                top:e.pageY - $(clickActive).data('top') - ($(clickActive).outerHeight()/2),
-                left:e.pageX - (stackResponses ? 0 : $(clickActive).data('left'))- ($(clickActive).outerWidth()/2)
-            },function() {
-				$('.responseItem[data-ontarget=false]').hide();
-				$('.responseItem[data-ontarget=false]:hidden:first').show();
-			}).transition({ scale: options.scaleOnTarget }).attr('data-ontarget',true);
 			
-            /*var currentQuestion = questions[$( clickActive ).data('index')];
-                currentQuestion.setValue( parseInt($(e.target).data('index'))+options.scaleMin );*/
-            iterations[$(clickActive).data('index')].element.val( parseInt($(e.target).data('index'))+options.scaleMin );
+			if ( e !== 'start' ) {
+
+				$(clickActive).animate({
+					top:e.pageY - (( smartView || stackResponses ) ? 0 : $(clickActive).data('top')) - ($(clickActive).outerHeight()/2),
+					left:e.pageX - (( smartView || stackResponses ) ? 0 : $(clickActive).data('left'))- ($(clickActive).outerWidth()/2)
+				},function() {
+					if ( smartView || stackResponses ) {
+						$('.responseItem[data-ontarget=false]').hide();
+						$('.responseItem[data-ontarget=false]:hidden:first').show();
+					}
+					$('.targetLayer').hide();
+					$(clickActive).removeClass('responseActive');
+					$('.circle, .startArea').unbind('click');
+					clickActive = null;
+				}).transition({ scale: options.scaleOnTarget }).attr('data-ontarget',true);
+				
+				/*var currentQuestion = questions[$( clickActive ).data('index')];
+					currentQuestion.setValue( parseInt($(e.target).data('index'))+options.scaleMin );*/
+				iterations[$(clickActive).data('index')].element.val( parseInt($(e.target).data('index'))+options.scaleMin );
+			
+			} else {
+				
+				if ( smartView || stackResponses ) {
+					$( clickActive ).animate({ top:$(clickActive).data('oTop'), left:$(clickActive).data('oLeft') },function() {
+						$('.responseItem[data-ontarget=false]').hide();
+						$('.responseItem[data-ontarget=false]:hidden:first').show();
+					}).transition({ scale: 1 }).attr('data-ontarget',false);
+				} else {
+					$( clickActive ).animate({ top:0, left:0 },function() {
+						if ( smartView || stackResponses ) {
+							$('.responseItem[data-ontarget=false]').hide();
+							$('.responseItem[data-ontarget=false]:hidden:first').show();
+						}
+					}).transition({ scale: 1 }).attr('data-ontarget',false);
+				}
+				$('.targetLayer').hide();
+				$(clickActive).removeClass('responseActive');
+				$('.circle, .startArea').unbind('click');
+				clickActive = null;
+				
+			}
 
         }
       
@@ -618,7 +729,7 @@
 
 						// now all images are loaded.
 						$container.css('visibility','visible');
-						$('.responseItem[data-ontarget=false]:hidden:first').show();
+						if ( smartView || stackResponses ) $('.responseItem[data-ontarget=false]:hidden:first').show();
 	
 					}
 				}).attr("src", fakeSrc);
@@ -626,7 +737,7 @@
 		} else {
 			$container.css('visibility','visible');
 			
-			$('.responseItem[data-ontarget=false]:hidden:first').show();
+			if ( smartView || stackResponses ) $('.responseItem[data-ontarget=false]:hidden:first').show();
 		}
 		
 		// Returns the container
