@@ -27,7 +27,7 @@
   <outputs defaultOutput="default">
     <output id="default">
       <description><![CDATA[Output when the browser support Javascript]]></description>
-      <condition><![CDATA[Browser.Support("javascript")]]></condition>
+      <condition><![CDATA[Browser.Support("javascript") and ( Browser.Name <> "Internet Explorer" Or Browser.Version.ToNumber() > 8 )]]></condition>
       <content fileName="standard.css" type="css" mode="dynamic" position="head" />
       <content fileName="default.html" type="html" mode="dynamic" position="head" />
       <content fileName="numeric.html" type="html" mode="dynamic" position="none" />
