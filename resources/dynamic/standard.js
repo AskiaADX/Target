@@ -19,6 +19,7 @@ $(window).load(function() {
         scaleMin : {%= CurrentQuestion.MinValue %},
         scaleMax : {%= CurrentQuestion.MaxValue %},
         innerCircleWidth : {%= CurrentADC.PropValue("innerCircleWidth") %},
+		maxValueAtCenter: {%= (CurrentADC.PropValue("maxValueAtCenter") = "1") %},
         innerCircleImageWidth : '{%= CurrentADC.PropValue("innerCircleImageWidth") %}',
         innerCircleImageHeight : '{%= CurrentADC.PropValue("innerCircleImageHeight") %}',
         circleBorderWidth : '{%= CurrentADC.PropValue("circleBorderWidth") %}',

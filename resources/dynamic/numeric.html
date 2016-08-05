@@ -7,15 +7,23 @@ Dim image
 Dim attrChecked
 Dim scaleMin = CurrentQuestion.MinValue
 Dim scaleMax = CurrentQuestion.MaxValue
+Dim maxValueAtCenter = CurrentADC.PropValue("maxValueAtCenter")
 Dim innerCircleText = CurrentADC.PropValue("innerCircleText")
 Dim innerCircleImage = CurrentADC.PropValue("innerCircleImage")
 Dim innerCircleImageWidth = CurrentADC.PropValue("innerCircleImageWidth")
 Dim innerCircleImageHeight = CurrentADC.PropValue("innerCircleImageHeight")
+Dim circleVal
 
 Dim numberOfCircles = scaleMax - scaleMin + 1
 
 Dim THP = CurrentADC.PropValue("targetHorizontalPosition")
 Dim TVP = CurrentADC.PropValue("targetVerticalPosition")
+
+IF maxValueAtCenter = "1" Then
+	circleVal = scaleMax
+Else
+	circleVal = scaleMin
+EndIF
 
 Dim ar = CurrentQuestion.ParentLoop.AvailableResponses
 Dim i
@@ -32,6 +40,14 @@ For j = 1 To ar.Count
 	<div class="targetContainer">
         {% For j = 1 To numberOfCircles %}
             <div class="circle circle{%=j-1%}"> 
+            	<div class="circleNumber">
+                	{%= circleVal %}
+                {% IF maxValueAtCenter = "1" Then %}
+                    {% circleVal = circleVal - 1 %}
+                {% Else %}
+                    {% circleVal = circleVal + 1 %}
+                {% EndIF %}
+                </div>
         {% Next %}  
             {% IF innerCircleImage <> "" Then %}
                 <img class="circleImg" width="{%:= innerCircleImageWidth %}" height="{%:= innerCircleImageHeight %}" src="{%:= innerCircleImage %}" />
@@ -99,6 +115,14 @@ For j = 1 To ar.Count
 	<div class="targetContainer">
         {% For j = 1 To numberOfCircles %}
             <div class="circle circle{%=j-1%}"> 
+            	<div class="circleNumber">
+                	{%:= circleVal %}
+                {% IF maxValueAtCenter = "1" Then %}
+                    {% circleVal = circleVal - 1 %}
+                {% Else %}
+                    {% circleVal = circleVal + 1 %}
+                {% EndIF %}
+                </div>
         {% Next %}  
             {% IF innerCircleImage <> "" Then %}
                 <img class="circleImg" width="{%:= innerCircleImageWidth %}" height="{%:= innerCircleImageHeight %}" src="{%:= innerCircleImage %}" />

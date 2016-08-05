@@ -9,7 +9,10 @@
     <guid>bd97fa6e-e96f-4a14-8ec8-45ec8184248d</guid>
     <version>1.0.0</version>
     <date>2016-03-18</date>
-    <description><![CDATA[]]></description>
+    <description><![CDATA[
+	   v1.0.0 - still need to look into full height and fallback
+		]]>
+	</description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -24,12 +27,18 @@
       <constraint on="responses" max="*" min="*" />
     </constraints>
   </info>
-  <outputs defaultOutput="default">
-    <output id="default">
+  <outputs defaultOutput="fallback">
+    <output id="fallback">
+      <description><![CDATA[Fallback when the browser doesnt support Javascript]]></description>
+      <condition><![CDATA[Not(Browser.Support("javascript"))]]></condition>
+      <content fileName="default.css" type="css" mode="static" position="head" />
+      <content fileName="default.html" type="html" mode="dynamic" position="placeholder" />
+    </output>
+    <output id="standard">
       <description><![CDATA[Output when the browser support Javascript]]></description>
       <condition><![CDATA[(Browser.Support("javascript") and Browser.Support("borderradius"))]]></condition>
       <content fileName="standard.css" type="css" mode="dynamic" position="head" />
-      <content fileName="default.html" type="html" mode="dynamic" position="head" />
+	  <content fileName="standard.html" type="html" mode="dynamic" position="placeholder" />
       <content fileName="numeric.html" type="html" mode="dynamic" position="none" />
       <content fileName="meta.html" type="html" mode="dynamic" position="head" />
       <content fileName="jquery-1.12.2.min.js" type="javascript" mode="share" position="head" />
@@ -462,9 +471,17 @@
       </property>
     </category>
     <category id="target" name="Target area">
-      <property xsi:type="standardProperty" id="targetAreaWidth" name="Target Area Width" type="string" mode="static" require="false" visible="true">
-        <description><![CDATA[This sets the width of the target area]]></description>
-        <value><![CDATA[50%]]></value>
+	  <property xsi:type="standardProperty" id="maxValueAtCenter" name="Max value at center" type="boolean" mode="static">
+        <description><![CDATA[
+          Determines if max value is center circle or outer circle.
+        ]]></description>
+        <value><![CDATA[true]]></value>
+      </property>
+	  <property xsi:type="standardProperty" id="showCircleValues" name="Show Circle Values" type="boolean" mode="static">
+        <description><![CDATA[
+          Determines if circle values are shown.
+        ]]></description>
+        <value><![CDATA[false]]></value>
       </property>
       <property xsi:type="standardProperty" id="useAltCircle" name="Use alt circle colour" type="boolean" mode="static">
         <description><![CDATA[
@@ -496,11 +513,11 @@
         ]]></description>
         <value><![CDATA[161,167,173]]></value>
       </property>
-      <property xsi:type="standardProperty" id="circleHoverColour" name="Circle Hover Colour" type="color" mode="static">
+      <property xsi:type="standardProperty" id="circleHoverColour" name="Target Hover Colour" type="color" mode="static">
         <description><![CDATA[
           Border colour for selected responses
         ]]></description>
-        <value><![CDATA[161,167,173]]></value>
+        <value><![CDATA[255,0,128]]></value>
       </property>
       <property xsi:type="standardProperty" id="circleBorderWidth" name="Circle border thickness" type="string" mode="static">
         <description><![CDATA[
@@ -512,18 +529,6 @@
           <option value="1px" text="1px" />
           <option value="2px" text="2px" />
         </options>
-      </property>
-      <property xsi:type="standardProperty" id="scaleMin" name="Scale Minimum" type="number" mode="static">
-        <description><![CDATA[
-          The bottom end of the scale
-       ]]></description>
-        <value><![CDATA[1]]></value>
-      </property>
-      <property xsi:type="standardProperty" id="scaleMax" name="Scale Maximum" type="number" mode="static">
-        <description><![CDATA[
-          The top end of the scale
-       ]]></description>
-        <value><![CDATA[5]]></value>
       </property>
       <property xsi:type="standardProperty" id="innerCircleWidth" name="Inner Circle Width" type="number" mode="static">
         <description><![CDATA[
@@ -559,25 +564,92 @@
         <description><![CDATA[This sets the width of the target area]]></description>
         <value></value>
       </property>
+	  <property xsi:type="standardProperty" id="targetAreaColourPrimary" name="Target Area Colour Primary" type="color" mode="static">
+        <description><![CDATA[
+          Primary colour of the target area 
+        ]]></description>
+        <value><![CDATA[0,147,234]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="targetAreaColourSecondary" name="Target Area Colour Secondary" type="color" mode="static">
+        <description><![CDATA[
+          Secondary colour of the target area 
+        ]]></description>
+        <value><![CDATA[0,147,234]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="targetAreaBorderColour" name="Target Area Border Colour" type="color" mode="static">
+        <description><![CDATA[
+          Border colour of the target area 
+        ]]></description>
+        <value><![CDATA[0,147,234]]></value>
+      </property>
+      <property xsi:type="standardProperty" id="targetAreaBorderThickness" name="Target Area Border Thickness" type="string" mode="static">
+        <description><![CDATA[
+          The thickness of the border around the target area 
+        ]]></description>
+        <value><![CDATA[none]]></value>
+        <options>
+          <option value="none" text="None" />
+          <option value="1px" text="1px" />
+          <option value="2px" text="2px" />
+          <option value="3px" text="3px" />
+          <option value="4px" text="4px" />
+          <option value="5px" text="5px" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="targetAreaBorderStyle" name="Target Area Border Style" type="string" mode="static">
+        <description><![CDATA[
+          The style of the border around the target area 
+        ]]></description>
+        <value><![CDATA[solid]]></value>
+        <options>
+          <option value="none" text="None" />
+          <option value="solid" text="Solid" />
+          <option value="dashed" text="Dashed" />
+          <option value="dotted" text="Dotted" />
+          <option value="double" text="Double" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="targetAreaBorderRadius" name="Target Area Border Radius" type="string" mode="static">
+        <description><![CDATA[
+          The amount of curve on the target area corners
+        ]]></description>
+        <value><![CDATA[0px]]></value>
+        <options>
+          <option value="0px" text="0" />
+          <option value="2px" text="2" />
+          <option value="5px" text="5" />
+          <option value="10px" text="10" />
+          <option value="15px" text="15" />
+          <option value="20px" text="20" />
+          <option value="25px" text="25" />
+          <option value="30px" text="30" />
+        </options>
+      </property>
+      <property xsi:type="standardProperty" id="targetAreaShadow" name="Target area shadow" type="string" mode="static">
+        <description><![CDATA[
+          The visibility of a dropshadow under the target area 
+        ]]></description>
+        <value><![CDATA[none]]></value>
+        <options>
+          <option value="0px 2px 3px 0px rgba(0,0,0,0.75)" text="On" />
+          <option value="none" text="Off" />
+        </options>
+      </property>
     </category>
     <category id="startArea" name="Start area">
-      <property xsi:type="standardProperty" id="startAreaWidth" name="Start Area Width" type="string" mode="static" require="false" visible="true">
-        <description><![CDATA[When set this will force the width of the reponses]]></description>
-        <value><![CDATA[50%]]></value>
-      </property>
       <property xsi:type="standardProperty" id="startAreaColourPrimary" name="Start Area Colour Primary" type="color" mode="static">
         <description><![CDATA[
           Primary colour of the selected item
         ]]></description>
         <value><![CDATA[0,147,234]]></value>
       </property>
-      <property xsi:type="standardProperty" id="startAreaColourSecondary" name="Start Area Colour Primary" type="color" mode="static">
+      <property xsi:type="standardProperty" id="startAreaColourSecondary" name="Start Area Colour Secondary" type="color" mode="static">
         <description><![CDATA[
           Primary colour of the selected item
         ]]></description>
         <value><![CDATA[0,147,234]]></value>
       </property>
-      <property xsi:type="standardProperty" id="startAreaBorderColour" name="Start Area Colour Primary" type="color" mode="static">
+      <property xsi:type="standardProperty" id="startAreaBorderColour" name="Start Area Border Colour" type="color" mode="static">
         <description><![CDATA[
           Primary colour of the selected item
         ]]></description>
@@ -587,7 +659,7 @@
         <description><![CDATA[
           The thickness of the border around the selected responses
         ]]></description>
-        <value><![CDATA[1px]]></value>
+        <value><![CDATA[none]]></value>
         <options>
           <option value="none" text="None" />
           <option value="1px" text="1px" />
@@ -614,7 +686,7 @@
         <description><![CDATA[
           The amount of curve on the response corners
         ]]></description>
-        <value><![CDATA[2px]]></value>
+        <value><![CDATA[0px]]></value>
         <options>
           <option value="0px" text="0" />
           <option value="2px" text="2" />
@@ -657,44 +729,27 @@
         </options>
       </property>
     </category>
-    <category id="numericQuestion" name="Numeric question">
-      <property xsi:type="standardProperty" id="unitStep" name="Step for numeric" type="number" mode="static">
+	<category id="fallback" name="Fallback">
+	  <property xsi:type="standardProperty" id="useList" name="Use a selection list" type="boolean" mode="static">
         <description><![CDATA[
-          Using HTML 5, in modern browser.
-          Indicates the unit to increment or decrement the number using the stepper.
-       ]]></description>
-        <value><![CDATA[1]]></value>
-      </property>
-    </category>
-    <category id="openQuestion" name="Open-ended question">
-      <property xsi:type="standardProperty" id="multiline" name="Multi-line text" type="boolean" mode="static">
-        <description><![CDATA[
-          Allow multi-line text for open-ended question.
-          Only when sub-type is text.
-       ]]></description>
+          
+          Use a select list to enumerate all available responses.
+          This option works with closed and numeric questions.
+          For numeric question, the range between bounds should be inferior than 20. It take in account the step option.
+        
+        ]]></description>
         <value><![CDATA[false]]></value>
       </property>
-      <property xsi:type="standardProperty" id="opensubtype" name="Open-ended sub-type" type="string" mode="static">
+	  <property xsi:type="standardProperty" id="imageAlign" name="Image Alignment" type="string" mode="static">
         <description><![CDATA[
-          Using HTML 5, in modern browser.
-          Define a sub-type for open-ended question.
-       ]]></description>
-        <value><![CDATA[text]]></value>
+          The alignment of the text in the responses
+        ]]></description>
+        <value><![CDATA[right]]></value>
         <options>
-          <option value="text" text="Text" />
-          <option value="email" text="Email" />
-          <option value="url" text="URL" />
-          <option value="color" text="Color" />
+          <option value="left" text="Left" />
+          <option value="center" text="Center" />
+          <option value="right" text="Right" />
         </options>
-      </property>
-      <property xsi:type="standardProperty" id="datalist" name="Data list" type="string" mode="dynamic">
-        <description><![CDATA[
-          Using HTML 5, in modern browser.
-          Add an auto-completion with the terms in the specified list.
-          Only available on single line.
-          Use a pipe `|` separators between each terms
-       ]]></description>
-        <value></value>
       </property>
     </category>
   </properties>

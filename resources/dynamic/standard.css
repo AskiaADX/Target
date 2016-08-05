@@ -49,11 +49,23 @@ Dim responseWidth =CurrentADC.PropValue("responseWidth")
 Dim startAreaWidth =CurrentADC.PropValue("startAreaWidth")
 Dim startAreaColourPrimary =CurrentADC.PropValue("startAreaColourPrimary")
 Dim startAreaColourSecondary =CurrentADC.PropValue("startAreaColourSecondary")
+Dim startAreaBorderColour =CurrentADC.PropValue("startAreaColourSecondary")
+Dim startAreaBorderThickness =CurrentADC.PropValue("startAreaBorderThickness")
+Dim startAreaBorderStyle =CurrentADC.PropValue("startAreaBorderStyle")
 Dim startAreaBorderRadius =CurrentADC.PropValue("startAreaBorderRadius")
 Dim startAreaShadow =CurrentADC.PropValue("startAreaShadow")
 Dim stackResponses =CurrentADC.PropValue("stackResponses")
 
 Dim targetAreaWidth =CurrentADC.PropValue("targetAreaWidth")
+Dim targetAreaColourPrimary =CurrentADC.PropValue("targetAreaColourPrimary")
+Dim targetAreaColourSecondary =CurrentADC.PropValue("targetAreaColourSecondary")
+Dim targetAreaBorderColour =CurrentADC.PropValue("targetAreaBorderColour")
+Dim targetAreaBorderThickness =CurrentADC.PropValue("targetAreaBorderThickness")
+Dim targetAreaBorderStyle =CurrentADC.PropValue("targetAreaBorderStyle")
+Dim targetAreaBorderRadius =CurrentADC.PropValue("targetAreaBorderRadius")
+Dim targetAreaShadow =CurrentADC.PropValue("targetAreaShadow")
+
+Dim showCircleValues =CurrentADC.PropValue("showCircleValues")
 
 Dim circleColour =CurrentADC.PropValue("circleColour")
 Dim circleBorderColour =CurrentADC.PropValue("circleBorderColour")
@@ -192,7 +204,6 @@ EndIF
 
 #adc_{%= CurrentADC.InstanceId%} .startArea { 
     display:block;
-	width:{%= startAreaWidth%}; 
 	
 	{% IF controlAlign = "center" Then %}
 		margin:0px auto;
@@ -210,6 +221,8 @@ EndIF
 	-webkit-box-shadow: {%= startAreaShadow%} !important;
 	-moz-box-shadow: {%= startAreaShadow%} !important;
 	box-shadow: {%= startAreaShadow%} !important;
+	
+	border:{%= startAreaBorderThickness %} {%= startAreaBorderStyle %} rgb({%= startAreaBorderColour%}); 
 	
 	/* Effects */
 	-webkit-border-radius:	{%= startAreaBorderRadius%}; 
@@ -248,10 +261,29 @@ EndIF
 
 #adc_{%= CurrentADC.InstanceId%} .targetContainer { 
     display:block; 
-    width:{%= targetAreaWidth %}; 
-    background:#09F; 
     position:absolute; 
     overflow:hidden; 
+	
+	background: rgb({%= targetAreaColourPrimary%}); 
+	background: -moz-linear-gradient(top,  rgb({%= targetAreaColourPrimary%}) 0%, rgb({%= targetAreaColourSecondary%}) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb({%= targetAreaColourPrimary%})), color-stop(100%,rgb({%= targetAreaColourSecondary%}))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgb({%= targetAreaColourPrimary%}) 0%,rgb({%= targetAreaColourSecondary%}) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgb({%= targetAreaColourPrimary%}) 0%,rgb({%= targetAreaColourSecondary%}) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgb({%= targetAreaColourPrimary%}) 0%,rgb({%= targetAreaColourSecondary%}) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgb({%= targetAreaColourPrimary%}) 0%,rgb({%= targetAreaColourSecondary%}) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr={%= targetAreaColourPrimary.ToHexa()%}, endColorstr={%= targetAreaColourSecondary.ToHexa()%},GradientType=0 ); /* IE6-8 */
+	
+	-webkit-box-shadow: {%= targetAreaShadow%} !important;
+	-moz-box-shadow: {%= targetAreaShadow%} !important;
+	box-shadow: {%= targetAreaShadow%} !important;
+	
+	border:{%= targetAreaBorderThickness %} {%= targetAreaBorderStyle %} rgb({%= targetAreaBorderColour%}); 
+	
+	/* Effects */
+	-webkit-border-radius:	{%= targetAreaBorderRadius%}; 
+	-moz-border-radius:		{%= targetAreaBorderRadius%}; 
+	-khtml-border-radius:	{%= targetAreaBorderRadius%}; 
+	border-radius:			{%= targetAreaBorderRadius%};
 }
 
 #adc_{%= CurrentADC.InstanceId%} .circle { 
@@ -270,6 +302,7 @@ EndIF
 	background-size:100% 100%;
 }
 #adc_{%= CurrentADC.InstanceId%} .innerCircle .circleText { 
+	font-family:inherit;
 	pointer-events:none;
     text-align:center;
     box-sizing:border-box;
@@ -291,3 +324,16 @@ EndIF
     border:{%= circleBorderWidth %} solid rgb({%= altCircleBorderColour%}); 
 }
 #adc_{%= CurrentADC.InstanceId%} .responseTargetLayer { display:block; width:100%; height:100%; position:absolute; top:0px; left:0px; }
+
+#adc_{%= CurrentADC.InstanceId%} .circleNumber {
+	font-family:inherit;
+	pointer-events:none;
+	color:rgb({%= fontColour%});
+	
+	{% IF showResponseHoverFontColour = "1" Then %}
+		display:inline;
+	{% Else %}
+		display:none;
+	{% EndIF %}
+	
+}

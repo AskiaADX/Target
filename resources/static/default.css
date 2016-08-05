@@ -12,3 +12,7 @@
     width  : 250px;
     height : 50px;
 }
+.adc-default .responseImg {
+	width:100px;
+	height:auto;
+}

@@ -1,7 +1,5 @@
 (function($,sr){
 
-  // debouncing function from John Hann
-  // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
   var debounce = function (func, threshold, execAsap) {
       var timeout;
 
@@ -26,14 +24,9 @@
 
 })(jQuery,'smartresize');
 
-
-// usage:
 $(window).smartresize(function(){
-  // code that takes it easy...
   location.reload();
 });
-
-
 
 (function ($) {
 
@@ -142,10 +135,11 @@ $(window).smartresize(function(){
 			landscape = parseInt(document.documentElement.clientWidth) > parseInt(document.documentElement.clientHeight) ? true : false,
 			scaleMin = options.scaleMin,
 			scaleMax = options.scaleMax,
+			maxValueAtCenter = Boolean(options.maxValueAtCenter),
             useAltCircle = Boolean(options.useAltCircle),
 			circleBorderWidth = parseInt(options.circleBorderWidth) > 0 ? parseInt(options.circleBorderWidth) * 2 : 0,
 			disableClick = false;
-		
+					
         var isMobile = false; //initiate as false
 		// device detection
 		if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
@@ -158,14 +152,14 @@ $(window).smartresize(function(){
             stackResponses = true;
 		}
 		
-		if ( landscape && $(window).outerWidth() < 1000 ) {
-			$container.find('.startArea').width( $(window).outerWidth()/2 + 'px' );
-			$container.find('.targetContainer').width( $(window).outerWidth()/2 + 'px' );
-		}
-			
 		if ( landscape ) {
-			$container.find('.startArea').width( $(window).width() - $container.find('.targetContainer').width() + 'px').css({'position':'absolute'});
-			$container.find('.targetContainer').css({'left':$(window).width() - $container.find('.targetContainer').width() + 'px'}).css({'position':'absolute'});
+			$container.find('.startArea').width( $container.outerWidth()/2 + 'px' );
+			$container.find('.targetContainer').width( $container.outerWidth()/2 + 'px' );
+		}
+		
+		if ( landscape ) {
+			$container.find('.startArea').width( $container.width() - $container.find('.targetContainer').width() + 'px').css({'position':'absolute'});
+			$container.find('.targetContainer').css({'left':$container.width() - $container.find('.targetContainer').width() + 'px'}).css({'position':'absolute'});
 		} else {
 			$container.find('.startArea').width('100%').css({'float':'none','height':''});
 			$container.find('.targetContainer').width('100%').height($container.find('.startArea').outerHeight()).css({'left':'0'/*,'position':'relative'*/});
@@ -341,19 +335,6 @@ $(window).smartresize(function(){
         $container.find('.startArea').height( $container.find('.startArea').height() );
         $container.find('.targetContainer').height( $container.find('.circle' + scaleMin ).height() );
 	
-		//if ( !stackResponses ) {
-		//for ( var i=($('.responseItem').size()-1); i>=0; i-- ) {
-		
-			//var offset = $('.responseItem').eq(i).offset();
-			//$('.responseItem').eq(i).offset(offset);
-			//$('.responseItem').eq(i).data({
-			//	'oTop':$('.responseItem').eq(i).offset().top,
-			//	'oLeft':$('.responseItem').eq(i).offset().left,
-			//	'oHeight':$('.responseItem').eq(i).outerHeight(),
-			//	'oWidth':$('.responseItem').eq(i).outerWidth()
-			//});
-				
-		//}
 		if ( resizeToFit || stackResponses ) {
 												
 			for ( var i=($('.responseItem').size()-1); i>=0; i-- ) {
@@ -403,7 +384,7 @@ $(window).smartresize(function(){
             	$container.find('.circle' + scaleMin ).width( $container.find('.targetContainer').outerWidth() - 40 );
             else
                 $container.find('.circle' + scaleMin ).width( $(window).outerHeight(false) - $container.find('.startArea').outerHeight(true) - bodyPadding - 40);
-				
+
             $container.find('.circle' + scaleMin ).css('left',(($container.find('.targetContainer').outerWidth()/2) - $container.find('.circle' + scaleMin ).outerWidth()/2) +'px');
 		
 		} else if ( landscape ) {
@@ -414,7 +395,7 @@ $(window).smartresize(function(){
             $container.find('.circle' + scaleMin ).width( $('.targetContainer').outerWidth(false) - 40 );
 			
 			if ( $container.find('.targetContainer').outerWidth(true) + $container.find('.startArea').outerWidth(true) > $(window).outerWidth(false) ) {
-				$container.find('.circle' + scaleMin ).width( $(window).outerWidth(false) - bodyPaddingH - 40 );
+				$container.find('.circle' + scaleMin ).width( $container.outerWidth(false) - bodyPaddingH - 40 );
 			}
 
 			if ( $container.find('.targetContainer').outerHeight(true) > $(window).outerHeight(false) || $container.find('.startArea').outerHeight(true) > $(window).outerHeight(false) ) {
@@ -458,9 +439,8 @@ $(window).smartresize(function(){
                     'border-radius':		(currentCircleWidth/2) + 'px' 
                 })
                 .data('index',i);
-           	if ( resizeToFit ) {
-                $container.find('.circle' + scaleMin ).css('left',(($container.find('.targetContainer').outerWidth()/2) - $container.find('.circle' + scaleMin ).outerWidth()/2) +'px')
-            }
+           	
+            $container.find('.circle' + scaleMin ).css('left',(($container.find('.targetContainer').outerWidth()/2) - $container.find('.circle' + scaleMin ).outerWidth()/2) +'px');
 			
             if ( useAltCircle && alt === 1 ) $container.find('.circle' + i).addClass("alt");
             
@@ -471,7 +451,7 @@ $(window).smartresize(function(){
             else alt = 0;
 		
 		}
-				
+						
         // Add class to center circle
         $('.circle'+scaleMax).addClass('innerCircle');
         
@@ -493,9 +473,10 @@ $(window).smartresize(function(){
 		$('.circleText').css({
             'position':'absolute',
             'top':(($('.innerCircle').outerHeight() - $('.circleText').outerHeight())/2) + 'px',
-            'width':'100%'//'left':(($('.innerCircle').outerWidth() - $('.circleText').outerWidth())/2) + 'px'
+            'width':'100%'
         });
-
+		
+		$container.find('.circleNumber').css({'font-size':(circleSizeDiff/2) + 'px','line-height':(circleSizeDiff/2) + 'px'});
         
         // set target container to biggest circle height
         $container.find('.targetContainer').height($container.find('.circle' + scaleMin ).height() + circleBorderWidth + 40);
@@ -505,7 +486,7 @@ $(window).smartresize(function(){
             $container.find('.startArea').height( $container.find('.targetContainer').outerHeight() );
 		}
 		
-		if ( (isMobile || parseInt(document.documentElement.clientWidth) < 500) && !landscape ) { 
+		if ( !landscape ) { 
 					
 			if ( options.targetVerticalPosition === 'top' ) {
 				$container.find('.targetContainer').css({'top':'0px','position':'absolute'});
@@ -517,17 +498,9 @@ $(window).smartresize(function(){
 			
         }
 		
-		//if ( options.targetVerticalPosition === 'top' ) {
-		//	$container.find('.targetContainer').css({'top':'0px','position':'absolute'});
-		//	$container.find('.startArea').css({'top':$container.find('.targetContainer').outerHeight()+'px','position':'absolute'});
-		//} else {
-		//	$container.find('.targetContainer').css('top',$container.find('.startArea').outerHeight()+'px');
-		//	$container.find('.startArea').css('top','0px');
-		//}
-		
         // if not mobile place side by side
         if ( landscape && options.targetHorizontalPosition === "right" && parseInt(document.documentElement.clientWidth) > 500 ) {
-			$container.find('.targetContainer').css({'left':$(window).width() - $container.find('.targetContainer').width() + 'px'});
+			$container.find('.targetContainer').css({'left':$container.width() - $container.find('.targetContainer').width() + 'px'});
 		} else if ( landscape && options.targetHorizontalPosition === "left" && parseInt(document.documentElement.clientWidth) > 500) {
 			$container.find('.targetContainer').css({'left':'0px','position':'absolute'});
 			$container.find('.startArea').css({'left':$container.find('.targetContainer').width() + 'px','position':'absolute'});
@@ -550,7 +523,7 @@ $(window).smartresize(function(){
 			tolerance: "pointer",
 			greedy: true,
 			drop: function( event, ui ) {
-                
+
                 $container.find('.over').removeClass('over');
 								
 				var x;
@@ -580,15 +553,17 @@ $(window).smartresize(function(){
 							
 				$( ui.draggable ).transition({ scale: options.scaleOnTarget, 'top':y + 'px', 'left':x + 'px' }).draggable({ 
 					cursorAt: { 
-						top:($(ui.draggable).data('oHeight')*options.scaleOnTarget)/2, 
-						left:($(ui.draggable).data('oWidth')*options.scaleOnTarget)/2
+						top:($(ui.draggable).data('oHeight'))/2, 
+						left:($(ui.draggable).data('oWidth'))/2
 					}, 
 					zIndex: 2700 
 				}).attr('data-ontarget',true);
-					                										
-				// FIX var currentQuestion = questions[$( ui.draggable ).data('index')];
-				// FIX 	currentQuestion.setValue( parseInt($(this).data('index'))+options.scaleMin );
-                iterations[$(ui.draggable).data('index')].element.val( parseInt($(this).data('index'))+options.scaleMin );
+
+				if ( maxValueAtCenter ) {
+					iterations[$(ui.draggable).data('index')].element.val( parseInt($(this).data('index'))+options.scaleMin );
+				} else {
+					iterations[$(ui.draggable).data('index')].element.val( options.scaleMax - parseInt($(this).data('index')) );
+				}
 					
 				$('.responseItem').each(function(index) { 
 					$('#res'+$(this).data('index')).removeClass('responseActive');
@@ -627,8 +602,6 @@ $(window).smartresize(function(){
 					}}).animate({ top:0, left:0 }).transition({ scale: 1 }).attr('data-ontarget',false);
 				}
 				
-				// FIX var currentQuestion = questions[$( ui.draggable ).data('index')];
-				// FIX	currentQuestion.clearValues();
                 iterations[$(ui.draggable).data('index')].element.val('');
 				
 				if ( resizeToFit || stackResponses ) {
@@ -689,8 +662,6 @@ $(window).smartresize(function(){
 			}
 			
 			// if value is set then move item;
-			// FIX var currentQuestion = questions[$(this).data('index')];
-			// FIX var val = currentQuestion.getValue();
             var val = iterations[$(this).data('index')].element.val();
 			
 			$('#res'+$(this).data('index')).data({
@@ -699,10 +670,10 @@ $(window).smartresize(function(){
 				'onTarget':false
 			});
 			if ( val !=='' ) {
-				                
-				// old
-				//var x = ($('.circle'+val).offset().left - parseInt( $(this).data('oLeft') ) ) - $(this).outerWidth()/2;
-				//var y = ($('.circle'+val).offset().top - parseInt(  $('#res'+$(this).data('index')).data('oTop') ) ) - $('#res'+$(this).data('index')).outerHeight()/2 + $('.circle'+val).outerHeight()/2;
+				
+				if ( !maxValueAtCenter ) {
+					val = parseInt(options.scaleMax) - parseInt(val);
+				}
 				
 				var x = 0,
 					y = 0;
@@ -721,12 +692,6 @@ $(window).smartresize(function(){
 					t = (Math.PI*2) * (randomNR(0,100)/100);
 				x = a + r * Math.cos(t);
 				y = b + r * Math.sin(t); 
-				
-				//y = ($('.circle0').height()/2);
-				
-				 
-    			//x = a + (r cos t)
-    			//y = b + (r sin t)
 				                
 				$('#res'+$(this).data('index')).draggable({ 
 					revert : 'invalid', 
@@ -755,7 +720,9 @@ $(window).smartresize(function(){
 							
 					})
 					.attr('data-ontarget',true);
+					
 			} else {
+				
 				// Initialise draggables
 				$('#res'+$(this).data('index')).draggable({ 
 					revert: 'invalid',
@@ -797,6 +764,9 @@ $(window).smartresize(function(){
 			
 		});
 		
+		if ( landscape ) $container.height( $container.find('.targetContainer').outerHeight() );
+		else $container.height( $container.find('.targetContainer').outerHeight() + $container.find('.startArea').outerHeight() );
+		
 		// Select next reponse
 		if ( selectNextResponse ) {
 			noDrag($(".responseItem[data-ontarget='false']").eq(0));	
@@ -811,15 +781,9 @@ $(window).smartresize(function(){
                 clickActive = null;
                 $(target).removeClass('responseActive');
                 $('.circle').unbind('click');
-				
-				// show all responses
-				if ( resizeToFit || stackResponses ) {
-					//$('.responseItem[data-ontarget=false]:hidden:first').show();
-					//$('.responseItem[data-ontarget=true]').show();
-				} else {
-					//$('.responseItem').show();
-				}
+
 				$('.targetLayer').hide();
+				
             } else {
 				
                 // deselect all others
@@ -839,8 +803,7 @@ $(window).smartresize(function(){
 				$('.startArea').bind('click', function (e) {
                     if ( $(e.target).data('index') == $(this).data('index') ) setTarget('start');
                 });
-				// hide all other responses
-				//$('.responseItem').not('.responseActive,.responseItem[data-ontarget=false]').hide();
+
             }
 						
         }
@@ -848,9 +811,7 @@ $(window).smartresize(function(){
         function setTarget(e) {
 						
 			if ( e !== 'start' ) {
-				
-				console.log($(e.target).offset().top);
-				
+								
 				$(clickActive).animate({
 					top:e.pageY - (( resizeToFit || stackResponses ) ? 0 : $(clickActive).data('oTop')) - ($(clickActive).outerHeight(true)/2) - $('.startArea').offset().top,
 					left:e.pageX - (( resizeToFit || stackResponses ) ? 0 : $(clickActive).data('oLeft')) - ($(clickActive).outerWidth(true)/2) - $('.startArea').offset().left
@@ -870,7 +831,11 @@ $(window).smartresize(function(){
 					}
 				}).transition({ scale: options.scaleOnTarget }).attr('data-ontarget',true);
 				
-				iterations[$(clickActive).data('index')].element.val( parseInt($(e.target).data('index'))+options.scaleMin );
+				if ( maxValueAtCenter ) {
+					iterations[$(clickActive).data('index')].element.val( parseInt($(e.target).data('index'))+options.scaleMin );
+				} else {
+					iterations[$(clickActive).data('index')].element.val( options.scaleMax - parseInt($(e.target).data('index')) );
+				}
 			
 			} else {
 				
@@ -900,7 +865,6 @@ $(window).smartresize(function(){
 			}
 			
         }
-      
 		
 		if ( options.animate ) {
 			var delay = 0,
