@@ -48,7 +48,7 @@
 	-webkit-box-sizing: border-box;  
 }
 
-.adc-target .responseActive { background:#FF0 !important; }
+.adc-target .responseActive { background:#FF0 !important; z-index:10001 !important; }
 
 .adc-target .startArea { 
 	display:block; width:400px; 

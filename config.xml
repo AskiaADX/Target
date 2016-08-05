@@ -53,16 +53,6 @@
   </outputs>
   <properties>
     <category id="general" name="General">
-      <property xsi:type="standardProperty" id="placeholder" name="Placeholder" type="string" mode="dynamic">
-        <description><![CDATA[Using HTML 5, in modern browser. Helper text shows in the input when it is empty.]]></description>
-        <value></value>
-      </property>
-      <property xsi:type="standardProperty" id="useList" name="Use a selection list" type="boolean" mode="static" require="false" visible="true">
-        <description><![CDATA[Use a select list to enumerate all available responses.
-          This option works with closed and numeric questions.
-          For numeric question, the range between bounds should be inferior than 20. It take in account the step option.]]></description>
-        <value><![CDATA[false]]></value>
-      </property>
       <property xsi:type="standardProperty" id="stackResponses" name="Stack Responses" type="boolean" mode="static" require="true" visible="true">
         <description><![CDATA[Whether the resonses are in a single stack]]></description>
         <value><![CDATA[false]]></value>

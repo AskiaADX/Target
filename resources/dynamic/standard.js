@@ -24,6 +24,7 @@ $(window).load(function() {
         circleBorderWidth : '{%= CurrentADC.PropValue("circleBorderWidth") %}',
         useAltCircle: {%= (CurrentADC.PropValue("useAltCircle") = "1") %},
       	targetHorizontalPosition : '{%= CurrentADC.PropValue("targetHorizontalPosition") %}',
+		targetVerticalPosition : '{%= CurrentADC.PropValue("targetVerticalPosition") %}',
 		iterations: [
       		{%:= CurrentADC.GetContent("dynamic/standard_numeric.js").ToText()%}
 		]

@@ -53,6 +53,7 @@ For j = 1 To ar.Count
             image	   = ar.ResourceURL[j]
         %}
         <div id="res{%=j-1%}" class="responseItem" data-index="{%=j-1%}">
+        	<div class="responseTargetLayer"></div>
             {% IF CurrentADC.PropValue("responseTextPosition") = "top" or CurrentADC.PropValue("responseTextPosition") = "left" Then %}
                 <div class="response_text">{%:= caption %}</div>
             {% EndIF %}
@@ -79,6 +80,7 @@ For j = 1 To ar.Count
             image	   = ar.ResourceURL[j]
         %}
         <div id="res{%=j-1%}" class="responseItem" data-index="{%=j-1%}">
+        	<div class="responseTargetLayer"></div>
             {% IF CurrentADC.PropValue("responseTextPosition") = "top" or CurrentADC.PropValue("responseTextPosition") = "left" Then %}
                 <div class="response_text">{%:= caption %}</div>
             {% EndIF %}

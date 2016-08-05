@@ -8,5 +8,3 @@ For i = 1 To ar.Count
 %}
 	{element : $('#{%= inputName%}')}{%= On(i < ar.Count, ",", "") %}
 {% Next %}
-                 
-                 

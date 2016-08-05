@@ -68,6 +68,8 @@ Dim innerCircleTextColour =CurrentADC.PropValue("innerCircleTextColour")
 
 Dim controlAlign =CurrentADC.PropValue("controlAlign")
 
+Dim targetHorizontalPosition = CurrentADC.PropValue("targetHorizontalPosition")
+
 IF responseHeight = "" Then
 	responseHeight = "auto"
 EndIF
@@ -218,8 +220,12 @@ EndIF
 	{% IF stackResponses = "1" And responseAlign = "center" Then %}
 		text-align:center;
 	{% EndIF %}
-    
-    float:left;
+	
+	{% IF targetHorizontalPosition = "right" Then %}
+    	float:left;
+	{% Else %}
+		float:right;
+	{% EndIF %}	
 }
 
 
@@ -253,7 +259,6 @@ EndIF
     background:rgb({%= circleColour%}); 
     border:{%= circleBorderWidth %} solid rgb({%= circleBorderColour%}); 
     position:absolute; 
-    behavior:url(PIE.htc); 
     box-sizing:border-box;
 }
 
@@ -262,7 +267,6 @@ EndIF
     background:rgb({%= innerCircleColour%}); 
     border:{%= circleBorderWidth %} solid rgb({%= circleBorderColour%}); 
     position:absolute; 
-    behavior:url(PIE.htc);
 	background-size:100% 100%;
 }
 #adc_{%= CurrentADC.InstanceId%} .innerCircle .circleText { 
@@ -286,3 +290,4 @@ EndIF
     background:rgb({%= altCircleColour%}); 
     border:{%= circleBorderWidth %} solid rgb({%= altCircleBorderColour%}); 
 }
+#adc_{%= CurrentADC.InstanceId%} .responseTargetLayer { display:block; width:100%; height:100%; position:absolute; top:0px; left:0px; }
