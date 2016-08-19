@@ -14,20 +14,13 @@ Dim innerCircleImageWidth = CurrentADC.PropValue("innerCircleImageWidth")
 Dim innerCircleImageHeight = CurrentADC.PropValue("innerCircleImageHeight")
 Dim circleVal
 
-Dim numberOfCircles = scaleMax - scaleMin + 1
-
 Dim THP = CurrentADC.PropValue("targetHorizontalPosition")
 Dim TVP = CurrentADC.PropValue("targetVerticalPosition")
-
-IF maxValueAtCenter = "1" Then
-	circleVal = scaleMax
-Else
-	circleVal = scaleMin
-EndIF
 
 Dim ar = CurrentQuestion.ParentLoop.AvailableResponses
 Dim i
 Dim j
+Dim k = 0
 For j = 1 To ar.Count 
     inputName = CurrentQuestion.Iteration(ar[j].Index).InputName()
     inputId   = inputName
@@ -38,16 +31,16 @@ For j = 1 To ar.Count
 
 {% IF TVP = "top" or THP = "left" Then %}
 	<div class="targetContainer">
-        {% For j = 1 To numberOfCircles %}
-            <div class="circle circle{%=j-1%}"> 
+        {% For j = scaleMin To scaleMax %}
+            <div class="circle circle{%= j %}"> 
             	<div class="circleNumber">
-                	{%= circleVal %}
-                {% IF maxValueAtCenter = "1" Then %}
-                    {% circleVal = circleVal - 1 %}
+                {% IF maxValueAtCenter <> "1" Then %}
+                    {%= (scaleMax - k) %}
                 {% Else %}
-                    {% circleVal = circleVal + 1 %}
+                	{%= j %}
                 {% EndIF %}
                 </div>
+                {% k = k + 1 %}
         {% Next %}  
             {% IF innerCircleImage <> "" Then %}
                 <img class="circleImg" width="{%:= innerCircleImageWidth %}" height="{%:= innerCircleImageHeight %}" src="{%:= innerCircleImage %}" />
@@ -55,7 +48,7 @@ For j = 1 To ar.Count
             {% IF innerCircleText <> "" Then %}
 				<div class="circleText">{%:= innerCircleText %}</div>
             {% EndIF %}
-        {% For i = 1 To numberOfCircles %}
+        {% For i = scaleMin To scaleMax %}
             </div>
         {% Next %}
     </div>
@@ -113,16 +106,16 @@ For j = 1 To ar.Count
         <div class="targetLayer"></div>
 	</div>
 	<div class="targetContainer">
-        {% For j = 1 To numberOfCircles %}
-            <div class="circle circle{%=j-1%}"> 
+        {% For j = scaleMin To scaleMax %}
+            <div class="circle circle{%:= j %}"> 
             	<div class="circleNumber">
-                	{%:= circleVal %}
-                {% IF maxValueAtCenter = "1" Then %}
-                    {% circleVal = circleVal - 1 %}
+                {% IF maxValueAtCenter <> "1" Then %}
+                    {%= (scaleMax - k) %}
                 {% Else %}
-                    {% circleVal = circleVal + 1 %}
+                	{%= j %}
                 {% EndIF %}
                 </div>
+                {% k = k + 1 %}
         {% Next %}  
             {% IF innerCircleImage <> "" Then %}
                 <img class="circleImg" width="{%:= innerCircleImageWidth %}" height="{%:= innerCircleImageHeight %}" src="{%:= innerCircleImage %}" />
@@ -130,7 +123,7 @@ For j = 1 To ar.Count
             {% IF innerCircleText <> "" Then %}
 				<div class="circleText">{%:= innerCircleText %}</div>
             {% EndIF %}
-        {% For i = 1 To numberOfCircles %}
+        {% For i = scaleMin To scaleMax %}
             </div>
         {% Next %}
     </div>

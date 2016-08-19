@@ -135,6 +135,7 @@ $(window).smartresize(function(){
 			landscape = parseInt(document.documentElement.clientWidth) > parseInt(document.documentElement.clientHeight) ? true : false,
 			scaleMin = options.scaleMin,
 			scaleMax = options.scaleMax,
+			fontSize = options.fontSize,
 			maxValueAtCenter = Boolean(options.maxValueAtCenter),
             useAltCircle = Boolean(options.useAltCircle),
 			circleBorderWidth = parseInt(options.circleBorderWidth) > 0 ? parseInt(options.circleBorderWidth) * 2 : 0,
@@ -294,6 +295,8 @@ $(window).smartresize(function(){
 		
 		// add ns to last x items
 		if ( options.numberNS > 0 ) $container.find('.responseItem').slice(-options.numberNS).addClass('ns');
+
+
 		
 		// Use range if on
 		if ( options.useRange ) {
@@ -476,7 +479,10 @@ $(window).smartresize(function(){
             'width':'100%'
         });
 		
-		$container.find('.circleNumber').css({'font-size':(circleSizeDiff/2) + 'px','line-height':(circleSizeDiff/2) + 'px'});
+		var numberSize = (circleSizeDiff/2) > parseInt( fontSize ) ? parseInt( fontSize ) : (circleSizeDiff/2),
+			lineHeight = (circleSizeDiff/2);
+		
+		$container.find('.circleNumber').css({'font-size':numberSize + 'px','line-height':lineHeight + 'px'});
         
         // set target container to biggest circle height
         $container.find('.targetContainer').height($container.find('.circle' + scaleMin ).height() + circleBorderWidth + 40);
@@ -559,11 +565,7 @@ $(window).smartresize(function(){
 					zIndex: 2700 
 				}).attr('data-ontarget',true);
 
-				if ( maxValueAtCenter ) {
-					iterations[$(ui.draggable).data('index')].element.val( parseInt($(this).data('index'))+options.scaleMin );
-				} else {
-					iterations[$(ui.draggable).data('index')].element.val( options.scaleMax - parseInt($(this).data('index')) );
-				}
+				iterations[$(ui.draggable).data('index')].element.val( parseInt($(this).data('index')) );
 					
 				$('.responseItem').each(function(index) { 
 					$('#res'+$(this).data('index')).removeClass('responseActive');
@@ -670,10 +672,6 @@ $(window).smartresize(function(){
 				'onTarget':false
 			});
 			if ( val !=='' ) {
-				
-				if ( !maxValueAtCenter ) {
-					val = parseInt(options.scaleMax) - parseInt(val);
-				}
 				
 				var x = 0,
 					y = 0;
@@ -831,11 +829,7 @@ $(window).smartresize(function(){
 					}
 				}).transition({ scale: options.scaleOnTarget }).attr('data-ontarget',true);
 				
-				if ( maxValueAtCenter ) {
-					iterations[$(clickActive).data('index')].element.val( parseInt($(e.target).data('index'))+options.scaleMin );
-				} else {
-					iterations[$(clickActive).data('index')].element.val( options.scaleMax - parseInt($(e.target).data('index')) );
-				}
+				iterations[$(clickActive).data('index')].element.val( parseInt($(e.target).data('index')) );
 			
 			} else {
 				

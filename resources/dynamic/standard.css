@@ -258,6 +258,9 @@ EndIF
 	background: linear-gradient(to bottom,  rgb({%= responseSelectedColourPrimary%}) 0%,rgb({%= responseSelectedColourSecondary%}) 100%) !important; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{%= responseSelectedColourPrimary.ToHexa()%}', endColorstr='{%= responseSelectedColourSecondary.ToHexa()%}',GradientType=0 ) !important; /* IE6-8 */
 }
+#adc_{%= CurrentADC.InstanceId%} .responseActive .response_text {
+	color:rgb({%= responseSelectedFontColour%}) !important;
+}
 
 #adc_{%= CurrentADC.InstanceId%} .targetContainer { 
     display:block; 
@@ -307,7 +310,7 @@ EndIF
     text-align:center;
     box-sizing:border-box;
     font-size:{%= fontSize%};
-    color:rgb({%= innerCircleTextColour%}); 
+    color:rgb({%= fontColour%}); 
 }
 #adc_{%= CurrentADC.InstanceId%} .innerCircle .circleImg { 
 	pointer-events:none;
@@ -330,7 +333,7 @@ EndIF
 	pointer-events:none;
 	color:rgb({%= fontColour%});
 	
-	{% IF showResponseHoverFontColour = "1" Then %}
+	{% IF showCircleValues = "1" Then %}
 		display:inline;
 	{% Else %}
 		display:none;

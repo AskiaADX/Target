@@ -7,6 +7,9 @@ Dim inputValue = CurrentQuestion.InputValue()
 Dim imageAlign = CurrentADC.PropValue("imageAlign")
 Dim minValue  = CurrentQuestion.MinValue
 Dim maxValue  = CurrentQuestion.MaxValue
+If minValue = maxValue Then
+    maxValue = 5
+EndIf
 Dim rangeLength = 0
 Dim j
 Dim ar = CurrentQuestion.ParentLoop.AvailableResponses

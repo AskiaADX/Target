@@ -11,8 +11,8 @@
     <date>2016-03-18</date>
     <description><![CDATA[
 	   v1.0.0 - still need to look into full height and fallback
-		]]>
-	</description>
+		
+	]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -38,7 +38,7 @@
       <description><![CDATA[Output when the browser support Javascript]]></description>
       <condition><![CDATA[(Browser.Support("javascript") and Browser.Support("borderradius"))]]></condition>
       <content fileName="standard.css" type="css" mode="dynamic" position="head" />
-	  <content fileName="standard.html" type="html" mode="dynamic" position="placeholder" />
+      <content fileName="standard.html" type="html" mode="dynamic" position="placeholder" />
       <content fileName="numeric.html" type="html" mode="dynamic" position="none" />
       <content fileName="meta.html" type="html" mode="dynamic" position="head" />
       <content fileName="jquery-1.12.2.min.js" type="javascript" mode="share" position="head" />
@@ -471,13 +471,13 @@
       </property>
     </category>
     <category id="target" name="Target area">
-	  <property xsi:type="standardProperty" id="maxValueAtCenter" name="Max value at center" type="boolean" mode="static">
+      <property xsi:type="standardProperty" id="maxValueAtCenter" name="Max value at center" type="boolean" mode="static">
         <description><![CDATA[
           Determines if max value is center circle or outer circle.
         ]]></description>
         <value><![CDATA[true]]></value>
       </property>
-	  <property xsi:type="standardProperty" id="showCircleValues" name="Show Circle Values" type="boolean" mode="static">
+      <property xsi:type="standardProperty" id="showCircleValues" name="Show Circle Values" type="boolean" mode="static">
         <description><![CDATA[
           Determines if circle values are shown.
         ]]></description>
@@ -487,7 +487,7 @@
         <description><![CDATA[
           If response height or width is forced then image will be resized to fit within container. If on this will override image resizeing rules
         ]]></description>
-        <value><![CDATA[false]]></value>
+        <value><![CDATA[true]]></value>
       </property>
       <property xsi:type="standardProperty" id="circleColour" name="Circle background colour" type="color" mode="static">
         <description><![CDATA[
@@ -505,7 +505,7 @@
         <description><![CDATA[
           Secondary colour of the selected item
         ]]></description>
-        <value><![CDATA[0,124,196]]></value>
+        <value><![CDATA[193,232,255]]></value>
       </property>
       <property xsi:type="standardProperty" id="altCircleBorderColour" name="Alt Circle Border Colour" type="color" mode="static">
         <description><![CDATA[
@@ -540,7 +540,7 @@
         <description><![CDATA[
           Border colour for selected responses
         ]]></description>
-        <value><![CDATA[0,147,234]]></value>
+        <value><![CDATA[119,203,253]]></value>
       </property>
       <property xsi:type="standardProperty" id="innerCircleText" name="Inner Circle Text" type="string" mode="static" require="false" visible="true">
         <description><![CDATA[This sets the width of the target area]]></description>
@@ -564,17 +564,17 @@
         <description><![CDATA[This sets the width of the target area]]></description>
         <value></value>
       </property>
-	  <property xsi:type="standardProperty" id="targetAreaColourPrimary" name="Target Area Colour Primary" type="color" mode="static">
+      <property xsi:type="standardProperty" id="targetAreaColourPrimary" name="Target Area Colour Primary" type="color" mode="static">
         <description><![CDATA[
           Primary colour of the target area 
         ]]></description>
-        <value><![CDATA[0,147,234]]></value>
+        <value><![CDATA[255,255,255]]></value>
       </property>
       <property xsi:type="standardProperty" id="targetAreaColourSecondary" name="Target Area Colour Secondary" type="color" mode="static">
         <description><![CDATA[
           Secondary colour of the target area 
         ]]></description>
-        <value><![CDATA[0,147,234]]></value>
+        <value><![CDATA[255,255,255]]></value>
       </property>
       <property xsi:type="standardProperty" id="targetAreaBorderColour" name="Target Area Border Colour" type="color" mode="static">
         <description><![CDATA[
@@ -647,7 +647,7 @@
         <description><![CDATA[
           Primary colour of the selected item
         ]]></description>
-        <value><![CDATA[0,147,234]]></value>
+        <value><![CDATA[0,124,196]]></value>
       </property>
       <property xsi:type="standardProperty" id="startAreaBorderColour" name="Start Area Border Colour" type="color" mode="static">
         <description><![CDATA[
@@ -729,8 +729,8 @@
         </options>
       </property>
     </category>
-	<category id="fallback" name="Fallback">
-	  <property xsi:type="standardProperty" id="useList" name="Use a selection list" type="boolean" mode="static">
+    <category id="fallback" name="Fallback">
+      <property xsi:type="standardProperty" id="useList" name="Use a selection list" type="boolean" mode="static">
         <description><![CDATA[
           
           Use a select list to enumerate all available responses.
@@ -740,7 +740,7 @@
         ]]></description>
         <value><![CDATA[false]]></value>
       </property>
-	  <property xsi:type="standardProperty" id="imageAlign" name="Image Alignment" type="string" mode="static">
+      <property xsi:type="standardProperty" id="imageAlign" name="Image Alignment" type="string" mode="static">
         <description><![CDATA[
           The alignment of the text in the responses
         ]]></description>
