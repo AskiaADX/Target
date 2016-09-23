@@ -1,31 +1,35 @@
 (function($,sr){
+    
+      var debounce = function (func, threshold, execAsap) {
+          var timeout;
 
-  var debounce = function (func, threshold, execAsap) {
-      var timeout;
+          return function debounced () {
+              var obj = this, args = arguments;
+              function delayed () {
+                  if (!execAsap)
+                      func.apply(obj, args);
+                  timeout = null;
+              };
 
-      return function debounced () {
-          var obj = this, args = arguments;
-          function delayed () {
-              if (!execAsap)
+              if (timeout)
+                  clearTimeout(timeout);
+              else if (execAsap)
                   func.apply(obj, args);
-              timeout = null;
+
+              timeout = setTimeout(delayed, threshold || 100);
           };
-
-          if (timeout)
-              clearTimeout(timeout);
-          else if (execAsap)
-              func.apply(obj, args);
-
-          timeout = setTimeout(delayed, threshold || 100);
-      };
-  }
-  // smartresize 
-  jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
+      }
+      // smartresize 
+      jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
 
 })(jQuery,'smartresize');
 
+var width = $(window).width(), height = $(window).height();
+
 $(window).smartresize(function(){
-  location.reload();
+  if($(window).width() != width) { // prevent resize when width changes only
+  	location.reload();
+  }
 });
 
 (function ($) {
@@ -559,8 +563,8 @@ $(window).smartresize(function(){
 							
 				$( ui.draggable ).transition({ scale: options.scaleOnTarget, 'top':y + 'px', 'left':x + 'px' }).draggable({ 
 					cursorAt: { 
-						top:($(ui.draggable).data('oHeight'))/2, 
-						left:($(ui.draggable).data('oWidth'))/2
+						top:isMobile?(($(ui.draggable).data('oHeight'))/2):(($(ui.draggable).data('oHeight'))/4), 
+						left:isMobile?(($(ui.draggable).data('oWidth'))/2):(($(ui.draggable).data('oWidth'))/4)
 					}, 
 					zIndex: 2700 
 				}).attr('data-ontarget',true);
@@ -695,16 +699,16 @@ $(window).smartresize(function(){
 					revert : 'invalid', 
 					distance: 10,
 					cursorAt: { 
-						top:($('#res'+$(this).data('index')).data('oHeight'))/2, 
-						left:($('#res'+$(this).data('index')).data('oWidth'))/2
+						top:isMobile?(($('#res'+$(this).data('index')).data('oHeight'))/2):(($('#res'+$(this).data('index')).data('oHeight'))/4), 
+						left:isMobile?(($('#res'+$(this).data('index')).data('oWidth'))/2):(($('#res'+$(this).data('index')).data('oWidth'))/4)
 					}})
 					.animate({top:y, left:x}, 
 						function(){ 
 							$(this).draggable({ 
 								revert : 'invalid', 
 								cursorAt: { 
-									top:($('#res'+$(this).data('index')).data('oHeight')*options.scaleOnTarget)/2, 
-									left:($('#res'+$(this).data('index')).data('oWidth')*options.scaleOnTarget)/2
+									top:isMobile?(($('#res'+$(this).data('index')).data('oHeight'))/2):(($('#res'+$(this).data('index')).data('oHeight')*options.scaleOnTarget)/2), 
+									left:isMobile?(($('#res'+$(this).data('index')).data('oWidth'))/2):(($('#res'+$(this).data('index')).data('oWidth')*options.scaleOnTarget)/2)
 								},
 								zIndex: 2700
 							});

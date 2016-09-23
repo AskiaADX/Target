@@ -7,11 +7,12 @@
   <info>
     <name>adc2-target</name>
     <guid>bd97fa6e-e96f-4a14-8ec8-45ec8184248d</guid>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <date>2016-03-18</date>
     <description><![CDATA[
 	   v1.0.0 - still need to look into full height and fallback
-		
+	   v1.0.1 - Fixed mobile resize scroll problem
+			  - Fixed centering of cards on drag
 	]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
