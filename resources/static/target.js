@@ -83,6 +83,7 @@ $(window).smartresize(function(){
 		(options.scaleOnTarget = options.scaleOnTarget || 0.5);
         (options.targetHorizontalPosition = options.targetHorizontalPosition || "right");
         (options.useAltCircle = options.useAltCircle || false);
+        (options.currentQuestion = options.currentQuestion || '');
 				
 		// Delegate .transition() calls to .animate() if the browser can't do CSS transitions.
 		if (!$.support.transition) $.fn.transition = $.fn.animate;
@@ -534,7 +535,10 @@ $(window).smartresize(function(){
 				}).attr('data-ontarget',true);
 
 				iterations[$(ui.draggable).data('index')].element.val( parseInt($(this).data('index')) );
-                if (window.askia) {
+                if (window.askia 
+                    && window.arrLiveRoutingShortcut 
+                    && window.arrLiveRoutingShortcut.length > 0
+                    && window.arrLiveRoutingShortcut.indexOf(options.currentQuestion) >= 0) {
                     askia.triggerAnswer();
                 }
 					
@@ -576,7 +580,10 @@ $(window).smartresize(function(){
 				}
 				
                 iterations[$(ui.draggable).data('index')].element.val('');
-                if (window.askia) {
+                if (window.askia 
+                    && window.arrLiveRoutingShortcut 
+                    && window.arrLiveRoutingShortcut.length > 0
+                    && window.arrLiveRoutingShortcut.indexOf(options.currentQuestion) >= 0) {
                     askia.triggerAnswer();
                 }
 				
@@ -804,7 +811,10 @@ $(window).smartresize(function(){
 				}).transition({ scale: options.scaleOnTarget }).attr('data-ontarget',true);
 				
 				iterations[$(clickActive).data('index')].element.val( parseInt($(e.target).data('index')) );
-                if (window.askia) {
+                if (window.askia 
+                    && window.arrLiveRoutingShortcut 
+                    && window.arrLiveRoutingShortcut.length > 0
+                    && window.arrLiveRoutingShortcut.indexOf(options.currentQuestion) >= 0) {
                     askia.triggerAnswer();
                 }
 			

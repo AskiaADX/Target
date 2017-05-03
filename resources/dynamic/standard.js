@@ -26,6 +26,7 @@ $(window).load(function() {
         useAltCircle: {%= (CurrentADC.PropValue("useAltCircle") = "1") %},
       	targetHorizontalPosition : '{%= CurrentADC.PropValue("targetHorizontalPosition") %}',
 		targetVerticalPosition : '{%= CurrentADC.PropValue("targetVerticalPosition") %}',
+      	currentQuestion: '{%:= CurrentQuestion.Shortcut %}',
 		iterations: [
       		{%:= CurrentADC.GetContent("dynamic/standard_numeric.js").ToText()%}
 		]
