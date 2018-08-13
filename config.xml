@@ -12,7 +12,8 @@
     <description><![CDATA[v1.0.0 - still need to look into full height and fallback
 	   v1.0.1 - Fixed mobile resize scroll problem
 			  - Fixed centering of cards on drag
-		v2.0.0 - Theme implementation]]></description>
+		v2.0.0 - Theme implementation
+		v2.0.2 - Added alt attribute to img]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>

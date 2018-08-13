@@ -43,7 +43,7 @@ For j = 1 To ar.Count
                 {% k = k + 1 %}
         {% Next %}  
             {% IF innerCircleImage <> "" Then %}
-                <img class="circleImg" width="{%:= innerCircleImageWidth %}" height="{%:= innerCircleImageHeight %}" src="{%:= innerCircleImage %}" />
+                <img class="circleImg" width="{%:= innerCircleImageWidth %}" height="{%:= innerCircleImageHeight %}" src="{%:= innerCircleImage %}" alt="circle"/>
             {% EndIF %}
             {% IF innerCircleText <> "" Then %}
 				<div class="circleText">{%:= innerCircleText %}</div>
@@ -67,7 +67,7 @@ For j = 1 To ar.Count
                 <div class="response_text">{%:= caption %}</div>
             {% EndIF %}
             {% IF image <> "" Then %}
-                <img src="{%= image %}" />
+            <img src="{%= image %}"  alt="{%:= caption %}"/>
             {% EndIF %}
             {% IF CurrentADC.PropValue("responseTextPosition") = "bottom" or CurrentADC.PropValue("responseTextPosition") = "right" Then %}
                 <div class="response_text">{%:= caption %}</div>
@@ -94,7 +94,7 @@ For j = 1 To ar.Count
                 <div class="response_text">{%:= caption %}</div>
             {% EndIF %}
             {% IF image <> "" Then %}
-                <img src="{%= image %}" />
+            <img src="{%= image %}" alt="{%:= caption %}" />
             {% EndIF %}
             {% IF CurrentADC.PropValue("responseTextPosition") = "bottom" or CurrentADC.PropValue("responseTextPosition") = "right" Then %}
                 <div class="response_text">{%:= caption %}</div>
@@ -118,7 +118,7 @@ For j = 1 To ar.Count
                 {% k = k + 1 %}
         {% Next %}  
             {% IF innerCircleImage <> "" Then %}
-                <img class="circleImg" width="{%:= innerCircleImageWidth %}" height="{%:= innerCircleImageHeight %}" src="{%:= innerCircleImage %}" />
+                <img class="circleImg" width="{%:= innerCircleImageWidth %}" height="{%:= innerCircleImageHeight %}" src="{%:= innerCircleImage %}" alt="circle" />
             {% EndIF %}
             {% IF innerCircleText <> "" Then %}
 				<div class="circleText">{%:= innerCircleText %}</div>

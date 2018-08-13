@@ -42,12 +42,12 @@ For j = 1 To ar.Count
     <tr valign="middle"><td style="padding-bottom:10px;">
     {% EndIF %}
 	{% IF image <> "" And imageAlign <> "right" Then %}
-        <img src="{%= image %}" class="responseImg" />
+        <img src="{%= image %}" class="responseImg" alt="{%= caption %}"/>
     {% EndIF %}
     {% IF image <> "" And imageAlign = "center" Then %}<br>{% EndIF %}
     <label class="caption">{%= caption %}</label>
     {% IF image <> "" And imageAlign = "right" Then %}
-        <img src="{%= image %}" class="responseImg" />
+        <img src="{%= image %}" class="responseImg" alt="{%= caption %}"/>
     {% EndIF %}
 	</td><td>
 {% If rangeLength > 0 And rangeLength <= 20 Then
