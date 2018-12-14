@@ -7,7 +7,7 @@
   <info>
     <name>Target</name>
     <guid>bd97fa6e-e96f-4a14-8ec8-45ec8184248d</guid>
-    <version>2.0.1</version>
+    <version>3.0.0</version>
     <date>2016-03-18</date>
     <description><![CDATA[v1.0.0 - still need to look into full height and fallback
 	   v1.0.1 - Fixed mobile resize scroll problem
@@ -23,7 +23,7 @@
       <category>General</category>
     </categories>
     <constraints>
-      <constraint on="questions" single="false" multiple="false" numeric="true" date="false" open="false" chapter="false" requireParentLoop="true" />
+      <constraint on="questions" single="false" multiple="false" numeric="true" date="false" open="false" chapter="false" requireParentLoop="true" RequireLoopDepth="true" />
       <constraint on="controls" responseblock="true" label="false" listbox="false" radiobutton="false" textbox="false" checkbox="false" />
       <constraint on="responses" max="*" min="*" />
     </constraints>
