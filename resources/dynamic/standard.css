@@ -43,7 +43,6 @@ Dim fontSize =CurrentADC.PropValue("fontSize")
 Dim responseHeight =CurrentADC.PropValue("responseHeight")
 Dim responseWidth =CurrentADC.PropValue("responseWidth")
 
-Dim startAreaWidth =CurrentADC.PropValue("startAreaWidth")
 Dim stackResponses =CurrentADC.PropValue("stackResponses")
 
 Dim showCircleValues =CurrentADC.PropValue("showCircleValues")
@@ -72,39 +71,39 @@ EndIF
 %}
 
 /* General */
-#adc_{%= CurrentADC.InstanceId%} 
-{ 
+#adc_{%= CurrentADC.InstanceId%}
+{
 	text-align:{%= responseAlign%};
     position:relative;
 }
 
 /* Reponses */
 #adc_{%= CurrentADC.InstanceId%} .responseItem
-{   
-	
+{
+
 	/* Decoration */
 	{% IF borderThickness = "none" Then %}
 		border: none;
 	{% Else %}
 		border: {%= borderThickness%} {%= borderStyle%} rgb({%= borderColour%});
-	{% EndIF %}	
+	{% EndIF %}
 	background-color: rgb({%= responseColourPrimary%});
-	
+
 	/* Effects */
-	-webkit-border-radius:	{%= borderRadius%}; 
-	-moz-border-radius:		{%= borderRadius%}; 
-	-khtml-border-radius:	{%= borderRadius%}; 
+	-webkit-border-radius:	{%= borderRadius%};
+	-moz-border-radius:		{%= borderRadius%};
+	-khtml-border-radius:	{%= borderRadius%};
 	border-radius:			{%= borderRadius%};
-	
+
 	-webkit-box-shadow: {%= responseShadow%};
 	-moz-box-shadow: {%= responseShadow%};
 	box-shadow: {%= responseShadow%};
-	
+
 	text-align: center;
-		
+
 	height: {%= responseHeight%};
 	width: {%= responseWidth%};
-	
+
 	padding: {%= responsePadding%};
 	{% IF stackResponses = "1" And responseAlign = "center" Then %}
 		margin: 0px auto;
@@ -112,17 +111,17 @@ EndIF
 	{% Else %}
 		margin: {%= responseMargin%};
 		float:left;
-	{% EndIF %}	
-    
+	{% EndIF %}
+
     position:relative;
-	
+
 	z-index: 100;
 }
 
 
 #adc_{%= CurrentADC.InstanceId%} .responseItem:hover
 {
-	
+
 	/* Decoration */
 	{% IF showResponseHoverBorder = "1" Then %}
 		border: {%= responseHoverBorderThickness%} {%= responseHoverBorderStyle%} rgb({%= responseHoverBorderColour%});
@@ -136,7 +135,7 @@ EndIF
 }
 
 #adc_{%= CurrentADC.InstanceId%} .responseItem img
-{  
+{
 	pointer-events:none;
 	margin:0px auto;
 	vertical-align:middle;
@@ -144,105 +143,105 @@ EndIF
 	padding:{%= responseImagePadding%};
 }
 
-#adc_{%= CurrentADC.InstanceId%} .response_text 
-{ 
+#adc_{%= CurrentADC.InstanceId%} .response_text
+{
 	pointer-events:none;
 	display:{%= displayResponseText%};
 	font-size:{%= fontSize%};
 	text-align:{%= responseTextAlign%};
 	color:rgb({%= fontColour%});
-	
+
 	padding:{%= responseTextPadding%};
 	line-height:{%= responseTextLineHeight%};
-	
+
 	{% IF responseTextPosition = "left" or responseTextPosition = "right" Then %}
 		float: {%= responseTextPosition%};
 	{% EndIF %}
-	
+
 	word-wrap: break-word;
 }
 
-#adc_{%= CurrentADC.InstanceId%} .responseItem:hover .response_text, #adc_{%= CurrentADC.InstanceId%} .responseItemMini:hover .response_text 
-{ 
+#adc_{%= CurrentADC.InstanceId%} .responseItem:hover .response_text, #adc_{%= CurrentADC.InstanceId%} .responseItemMini:hover .response_text
+{
 	{% IF showResponseHoverFontColour = "1" Then %}
 		color:rgb({%= responseHoverFontColour%});
 	{% EndIF %}
 }
 
-#adc_{%= CurrentADC.InstanceId%} .startArea { 
+#adc_{%= CurrentADC.InstanceId%} .startArea {
     display:block;
-	
+
 	{% IF controlAlign = "center" Then %}
 		margin:0px auto;
 	{% EndIF %}
-	
+
 	{% IF stackResponses = "1" And responseAlign = "center" Then %}
 		text-align:center;
 	{% EndIF %}
-	
+
 	{% IF targetHorizontalPosition = "right" Then %}
     	float:left;
 	{% Else %}
 		float:right;
-	{% EndIF %}	
+	{% EndIF %}
 }
 
 
-#adc_{%= CurrentADC.InstanceId%} .responseActive { 
-	/* Decoration */	
+#adc_{%= CurrentADC.InstanceId%} .responseActive {
+	/* Decoration */
 	{% IF responseSelectedBorderThickness = "none" Then %}
 		border: none;
 	{% Else %}
 		border: {%= responseSelectedBorderThickness%} {%= responseSelectedBorderStyle%} rgb({%= responseSelectedBorderColour%});
-	{% EndIF %}	
+	{% EndIF %}
 	background-color: rgb({%= responseSelectedColourPrimary%});
 }
 #adc_{%= CurrentADC.InstanceId%} .responseActive .response_text {
 	color:rgb({%= responseSelectedFontColour%});
 }
 
-#adc_{%= CurrentADC.InstanceId%} .targetContainer { 
-    display:block; 
-    position:absolute; 
-    overflow:hidden; 
+#adc_{%= CurrentADC.InstanceId%} .targetContainer {
+    display:block;
+    position:absolute;
+    overflow:hidden;
 }
 
-#adc_{%= CurrentADC.InstanceId%} .circle { 
-    display:block; 
-    background:rgb({%= circleColour%}); 
-    border:{%= circleBorderWidth %} solid rgb({%= circleBorderColour%}); 
-    position:absolute; 
+#adc_{%= CurrentADC.InstanceId%} .circle {
+    display:block;
+    background:rgb({%= circleColour%});
+    border:{%= circleBorderWidth %} solid rgb({%= circleBorderColour%});
+    position:absolute;
     box-sizing:border-box;
 }
 
-#adc_{%= CurrentADC.InstanceId%} .innerCircle { 
-    display:block; 
-    background:rgb({%= innerCircleColour%}); 
-    border:{%= circleBorderWidth %} solid rgb({%= circleBorderColour%}); 
-    position:absolute; 
+#adc_{%= CurrentADC.InstanceId%} .innerCircle {
+    display:block;
+    background:rgb({%= innerCircleColour%});
+    border:{%= circleBorderWidth %} solid rgb({%= circleBorderColour%});
+    position:absolute;
 	background-size:100% 100%;
 }
-#adc_{%= CurrentADC.InstanceId%} .innerCircle .circleText { 
+#adc_{%= CurrentADC.InstanceId%} .innerCircle .circleText {
 	font-family:inherit;
 	pointer-events:none;
     text-align:center;
     box-sizing:border-box;
     font-size:{%= fontSize%};
-    color:rgb({%= fontColour%}); 
+    color:rgb({%= fontColour%});
 }
-#adc_{%= CurrentADC.InstanceId%} .innerCircle .circleImg { 
+#adc_{%= CurrentADC.InstanceId%} .innerCircle .circleImg {
 	pointer-events:none;
 }
 
 
 #adc_{%= CurrentADC.InstanceId%} .over, #adc_{%= CurrentADC.InstanceId%} .alt.over {
-    background: rgb({%= circleHoverColour%}); 
-    border-color: rgb({%= circleHoverColour%}); 
+    background: rgb({%= circleHoverColour%});
+    border-color: rgb({%= circleHoverColour%});
 }
 
 #adc_{%= CurrentADC.InstanceId%} .alt {
-    background:rgb({%= altCircleColour%}); 
-    border:{%= circleBorderWidth %} solid rgb({%= altCircleBorderColour%}); 
+    background:rgb({%= altCircleColour%});
+    border:{%= circleBorderWidth %} solid rgb({%= altCircleBorderColour%});
 }
 #adc_{%= CurrentADC.InstanceId%} .responseTargetLayer { display:block; width:100%; height:100%; position:absolute; top:0px; left:0px; }
 
@@ -250,11 +249,11 @@ EndIF
 	font-family:inherit;
 	pointer-events:none;
 	color:rgb({%= fontColour%});
-	
+
 	{% IF showCircleValues = "1" Then %}
 		display:inline;
 	{% Else %}
 		display:none;
 	{% EndIF %}
-	
+
 }

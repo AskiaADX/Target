@@ -7,7 +7,7 @@
   <info>
     <name>Target</name>
     <guid>bd97fa6e-e96f-4a14-8ec8-45ec8184248d</guid>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
     <date>2022-10-18</date>
     <description><![CDATA[v1.0.0 - still need to look into full height and fallback
 	  v1.0.1 - Fixed mobile resize scroll problem
@@ -16,7 +16,8 @@
 		v2.0.2 - Added alt attribute to img
 			   - Created routing for web accessibility (enhanced)
     v3.1.0 - Libraries updated.
-           - Share folder removed]]></description>
+           - Share folder removed
+    v3.1.1 - DOF runtime errors are fixed]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
