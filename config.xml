@@ -7,14 +7,16 @@
   <info>
     <name>Target</name>
     <guid>bd97fa6e-e96f-4a14-8ec8-45ec8184248d</guid>
-    <version>3.0.2</version>
-    <date>2016-03-18</date>
+    <version>3.1.0</version>
+    <date>2022-10-18</date>
     <description><![CDATA[v1.0.0 - still need to look into full height and fallback
-	   v1.0.1 - Fixed mobile resize scroll problem
+	  v1.0.1 - Fixed mobile resize scroll problem
 			  - Fixed centering of cards on drag
 		v2.0.0 - Theme implementation
 		v2.0.2 - Added alt attribute to img
-			   - Created routing for web accessibility (enhanced)]]></description>
+			   - Created routing for web accessibility (enhanced)
+    v3.1.0 - Libraries updated.
+           - Share folder removed]]></description>
     <company>Askia</company>
     <author><![CDATA[Paul Ferreira <paulf@askia.com>]]></author>
     <site>http://www.askia.com</site>
@@ -42,19 +44,19 @@
       <content fileName="standard.html" type="html" mode="dynamic" position="placeholder" />
       <content fileName="numeric.html" type="html" mode="dynamic" position="none" />
       <content fileName="meta.html" type="html" mode="dynamic" position="head" />
-      <content fileName="jquery-1.12.2.min.js" type="javascript" mode="share" position="head" />
-      <content fileName="jquery-ui.min.js" type="javascript" mode="share" position="head" />
-      <content fileName="jquery.ui.touch-punch.min.js" type="javascript" mode="share" position="head" />
-      <content fileName="jquery.transit.min.js" type="javascript" mode="share" position="head" />
+      <content fileName="jquery-3.6.0.min.js" type="javascript" mode="static" position="head" />
+      <content fileName="jquery-ui.min.js" type="javascript" mode="static" position="head" />
+      <content fileName="jquery.ui.touch-punch.min.js" type="javascript" mode="static" position="head" />
+      <content fileName="jquery.transit.min.js" type="javascript" mode="static" position="head" />
       <content fileName="target.js" type="javascript" mode="static" position="head" />
       <content fileName="standard.js" type="javascript" mode="dynamic" position="foot" />
-      <content fileName="es5-shim.min.js" type="javascript" mode="share" position="head">
+      <content fileName="es5-shim.min.js" type="javascript" mode="static" position="head">
         <yield><![CDATA[
-          
+
           <!--[if lt IE 10]>
-            <script type="text/javascript" src="{%= CurrentADC.URLTo("share/es5-shim.min.js") %}"></script>
+            <script type="text/javascript" src="{%= CurrentADC.URLTo("static/es5-shim.min.js") %}"></script>
           <![endif]-->
-          
+
         ]]></yield>
       </content>
       <content fileName="target.css" type="css" mode="static" position="head" />

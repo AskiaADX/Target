@@ -1,5 +1,5 @@
 /* standard.js */
-$(window).load(function() {
+$(window).on("load", function() {
 	$('#adc_{%= CurrentADC.InstanceId %}').adcTarget({
 		maxWidth : '{%= CurrentADC.PropValue("maxWidth") %}',
 		controlWidth : '{%= CurrentADC.PropValue("controlWidth") %}',
@@ -16,19 +16,19 @@ $(window).load(function() {
 		selectNextResponse: {%= (CurrentADC.PropValue("selectNextResponse") = "1") %},
 		autoStackWidth: '{%= CurrentADC.PropValue("autoStackWidth") %}',
 		fontSize: '{%= CurrentADC.PropValue("fontSize") %}',
-        scaleMin : {%= CurrentQuestion.MinValue %},
-        scaleMax : {%= CurrentQuestion.MaxValue %},
-        innerCircleWidth : {%= CurrentADC.PropValue("innerCircleWidth") %},
+    scaleMin : {%= CurrentQuestion.MinValue %},
+    scaleMax : {%= CurrentQuestion.MaxValue %},
+    innerCircleWidth : {%= CurrentADC.PropValue("innerCircleWidth") %},
 		maxValueAtCenter: {%= (CurrentADC.PropValue("maxValueAtCenter") = "1") %},
-        innerCircleImageWidth : '{%= CurrentADC.PropValue("innerCircleImageWidth") %}',
-        innerCircleImageHeight : '{%= CurrentADC.PropValue("innerCircleImageHeight") %}',
-        circleBorderWidth : '{%= CurrentADC.PropValue("circleBorderWidth") %}',
-        useAltCircle: {%= (CurrentADC.PropValue("useAltCircle") = "1") %},
-      	targetHorizontalPosition : '{%= CurrentADC.PropValue("targetHorizontalPosition") %}',
+    innerCircleImageWidth : '{%= CurrentADC.PropValue("innerCircleImageWidth") %}',
+    innerCircleImageHeight : '{%= CurrentADC.PropValue("innerCircleImageHeight") %}',
+    circleBorderWidth : '{%= CurrentADC.PropValue("circleBorderWidth") %}',
+    useAltCircle: {%= (CurrentADC.PropValue("useAltCircle") = "1") %},
+  	targetHorizontalPosition : '{%= CurrentADC.PropValue("targetHorizontalPosition") %}',
 		targetVerticalPosition : '{%= CurrentADC.PropValue("targetVerticalPosition") %}',
-      	currentQuestion: '{%:= CurrentQuestion.Shortcut %}',
+  	currentQuestion: '{%:= CurrentQuestion.Shortcut %}',
 		iterations: [
-      		{%:= CurrentADC.GetContent("dynamic/standard_numeric.js").ToText()%}
+  		{%:= CurrentADC.GetContent("dynamic/standard_numeric.js").ToText()%}
 		]
 	});
 });
